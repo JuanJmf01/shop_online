@@ -1,0 +1,20 @@
+.component {
+    margin-right: 2%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.component p {
+    height: 44px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.component img {
+    width: 140px;
+    height: 130px;
+}
+
+.component a {
+    text-decoration: none;
+}
