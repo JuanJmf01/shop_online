@@ -18,6 +18,24 @@ export default function Menu() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/ofertas">Ofertas</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/filtro">Filtrar</Link>
+                        </li>
+                        <Autorizado role="vendedor"
+                            autorizado={
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/misProductos">Mis productos</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/misVentas">Mis ventas</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/productos/crear">Crear producto</Link>
+                                    </li>
+                                </>
+                            }
+                        />
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Perfil
@@ -29,16 +47,6 @@ export default function Menu() {
                                 <Link className="dropdown-item" href="#">Something else here</Link>
                             </div>
                         </li>
-                        <Autorizado role="vendedor"
-                            autorizado={
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/productos/crear">Crear producto</Link>
-                                    </li>
-                                </>
-                            }
-                        />
-
                     </ul>
 
 

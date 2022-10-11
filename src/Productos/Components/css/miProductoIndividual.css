@@ -6,6 +6,7 @@
 
 }
 
+
 .component p {
     height: 5px;
     font-size: 15px;
@@ -21,10 +22,4 @@
 
 .component a {
     text-decoration: none;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 12px;
 }

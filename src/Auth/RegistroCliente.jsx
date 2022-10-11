@@ -12,7 +12,6 @@ export default function RegistroCliente() {
                 apellidos: '',
                 email: '',
                 telefonoCelular: null,
-                cedula: null,
                 contraseña: ''
             }}
                 onSubmit={valores => console.log(valores)}
@@ -24,7 +23,7 @@ export default function RegistroCliente() {
                         <Input type='text' label='Nombres' campo='nombres' placeholder='Nombres' />
                         <Input type='text' label='Apellidos' campo='apellidos' placeholder='Apellidos' />
                         <Input type='text' label='Email' campo='email' placeholder='Email' />
-                        <Input type='number' label='Cedula' campo='Cedula' placeholder='Cedula' />
+                        <Input type='number' label='Numero Celular' campo='telefonoCelular' placeholder='...' />
                         <Input type='password' label='Contraseña' campo='contraseña' placeholder='Contraseña' />
 
                         <Button disabled={formikProps.isSubmitting} className='btn btn-primary' type='submit'>
@@ -36,7 +35,7 @@ export default function RegistroCliente() {
                 )}
 
             </Formik>
-            
+
         </>
     )
 }

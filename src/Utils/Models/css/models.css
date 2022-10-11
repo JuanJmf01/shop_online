@@ -12,6 +12,8 @@
     justify-content: center;
 }
 
+
+
 .ContenedorModal{
     width: 500px;
     min-height: 100px;
@@ -23,7 +25,6 @@
 }
 
 .encabezadoModal{
-    display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -32,6 +33,7 @@
 }
 
 .encabezadoModal h3{
+    text-align: center;
     font-weight: 500;
     font-size: 16px;
     color: #1766DC;
@@ -41,8 +43,6 @@
     position: absolute  ;
     top: 3px;
     right: 12px;
-
-
     transition: .3s ease all;
     border-radius: 5px;
 }
@@ -57,9 +57,9 @@
 }
 
 .contenido{
-    display: flex;
-	flex-direction: column;
-	align-items: center;
+    /* display: flex; */
+	/* flex-direction: column;
+	align-items: center; */
 }
 
 .contenido h3 {
@@ -79,6 +79,7 @@
 .row button{
     flex-direction: row;
 }
+
 
 
 
