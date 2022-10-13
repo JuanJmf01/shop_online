@@ -10,7 +10,6 @@ import './css/detalleProducto.css'
 
 export default function DetalleProducto() {
 
-    const numeroCelular = '3003765873'
     const [añadirVenta, setAñadirVenta] = useState(false)
     const [comprar, setComprar] = useState(false)
     const [cantidad, setCantidad] = useState(1)
@@ -27,9 +26,6 @@ export default function DetalleProducto() {
             .then((respuesta) => {
                 setProducto(respuesta.data)
                 setVendedor(respuesta.data.vendedores[0])
-
-
-
             })
     }, [id])
 
@@ -38,7 +34,6 @@ export default function DetalleProducto() {
 
         return total
     }
-
 
     return (
         <>
@@ -108,8 +103,6 @@ export default function DetalleProducto() {
                 </div>
 
             </Model> : null}
-
-
             {comprar ? <Model title="Confirmar compra">
                 <div className="model">
                     <div>
@@ -145,7 +138,6 @@ export default function DetalleProducto() {
                         </a>
                     </div>
                     <div>
-
                         <h5>Redes sociales:</h5>
                         <a href={vendedor.instagram} target="_blank">
                             <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
@@ -155,7 +147,6 @@ export default function DetalleProducto() {
                             <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"
                                 className="logo" />
                         </a>
-
                         <hr />
                         <h4>Medios de pago</h4>
                     </div>
