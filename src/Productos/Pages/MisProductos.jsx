@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import AlertaContext from "../../Utils/AlertaContext"
 import { urlProductos } from "../../Utils/endpoinds"
 import ListadoDeMisProductos from "../Components/ListadoDeMisProductos"
-import ListadoDeProductos from "../ListadoDeProductos"
 
 export default function MisProductos() {
 

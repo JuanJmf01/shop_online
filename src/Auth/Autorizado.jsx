@@ -7,11 +7,13 @@ function Autorizado(props) {
     const { claims } = useContext(AutenticationContextt)
 
     useEffect(() => {
+        //Si hay un rol presente, identificamos a travez de los claims si el usuario tiene dicho rol 
         if (props.role) {
             const indice = claims.findIndex(claim =>
                 claim.nombre === 'role' && claim.valor === props.role)
             setEstaAutorizado(indice > -1)
         } else {
+            //Si no tiene rol no esta autenticado por lo tanto no tiene claims
             setEstaAutorizado(claims.length > 0)
         }
     }, [claims, props.role])

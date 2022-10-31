@@ -1,13 +1,48 @@
+import axios from "axios";
 import { Formik, Form } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AutenticationContextt } from "../App";
 import Button from "../Utils/Button";
+import { urlCuentas, urlVendedores } from "../Utils/endpoinds";
 import FormGroupCheckBox from "../Utils/FormGroupCheckBox";
 import Input from "../Utils/Input";
+import { guardarTokenLocalStorage, obtenerClaims } from "./manejadorJWT";
+
+
 
 export default function RegistroVendedor() {
 
     const [facebook, setFacebook] = useState(false)
     const [instagram, setInstagram] = useState(false)
+
+    const { actualizar } = useContext(AutenticationContextt)
+    const navigate = useNavigate()
+
+
+    async function registroPrincipal(credenciales) {
+        try {
+            const respuesta = await axios.post(`${urlCuentas}/CrearCliente`, credenciales)
+            guardarTokenLocalStorage(respuesta.data)
+            actualizar(obtenerClaims())
+            console.log(respuesta.data)
+            registroSecundario(credenciales)
+            navigate('/login')
+        }catch(error){
+            console.log(error.response.data)
+        }
+    }
+
+    async function registroSecundario(credenciales) {
+        try {
+            await axios.post(urlVendedores, credenciales)
+        }
+        catch (error) {
+            console.error(error.response.data)
+        }
+    }
+
+    
 
     return (
         <>
@@ -19,13 +54,12 @@ export default function RegistroVendedor() {
                 numeroCelular: null,
                 nombreNegocio: '',
                 descripcionNegocio: '',
-                telefonoCelular: null,
                 facebook: '',
                 instagram: '',
-                contraseña: ''
+                password: ''
             }}
                 onSubmit={async valores => {
-                    await new Promise(r => setTimeout(r, 1000))
+                    await registroPrincipal(valores)
                     console.log(valores)
                 }}
             >
@@ -54,7 +88,7 @@ export default function RegistroVendedor() {
                         }
                         <br />
 
-                        <Input type='password' label='Contraseña' campo='contraseña' placeholder='Contraseña' />
+                        <Input type='password' label='Contraseña' campo='password' placeholder='Contraseña' />
                         <div>
                             <Button disabled={formikProps.isSubmitting} className='btn btn-primary' type='submit'>
                                 Registrar

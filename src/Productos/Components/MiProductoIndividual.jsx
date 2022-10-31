@@ -36,7 +36,7 @@ export default function MiProductoIndividual(props) {
                         to={`/productos/editar/${props.producto.id}`}>
                         Editar
                     </Link>
-                    <Button style={{ }}
+                    <Button
                         onClick={() => confirmar(() => borrarProducto())}
                         className="btn btn-danger">Borrar</Button>
                 </div>

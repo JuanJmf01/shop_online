@@ -3,6 +3,7 @@ import Login from "./Auth/Login";
 import RegistroCliente from "./Auth/RegistroCliente";
 import RegistroVendedor from "./Auth/RegistroVendedor";
 import IndiceOfertas from "./Ofertas/IndiceOfertas";
+import InformacionNegocio from "./Perfil/InformacionNegocio";
 import InformacionPersonal from "./Perfil/InformacionPersonal";
 import DetalleProducto from "./Productos/DetalleProducto";
 import CrearProducto from "./Productos/Pages/CrearProducto";
@@ -23,9 +24,9 @@ export const rutas = [
 
 
     { path: '/productos', componente: Productos },
-    { path: '/misProductos', componente: MisProductos },
-    { path: '/productos/crear', componente: CrearProducto },
-    { path: '/productos/editar/:id', componente: EditarProducto },
+    { path: '/misProductos', componente: MisProductos, esAdmin: true },
+    { path: '/productos/crear', componente: CrearProducto, esAdmin: true },
+    { path: '/productos/editar/:id', componente: EditarProducto, esAdmin: true },
     { path: '/productos/:id', componente: DetalleProducto },
 
     
@@ -35,9 +36,7 @@ export const rutas = [
     { path: '/filtro/domiciliarios', componente: FiltroDomiciliarios },
 
 
-    { path: '/misVentas', componente: IndiceVentas },
-
-
+    { path: '/misVentas', componente: IndiceVentas, esAdmin: true },
 
 
     { path: '/ofertas', componente: IndiceOfertas },
@@ -45,6 +44,7 @@ export const rutas = [
 
 
     { path: '/personalInformacion', componente: InformacionPersonal },
+    { path: '/informacionNegocio', componente: InformacionNegocio },
 
 
 
