@@ -9,8 +9,6 @@ import { configurarInterceptor } from './Utils/interceptores';
 
 export const AutenticationContextt = React.createContext()
 
-configurarInterceptor()
-
 function App() {
 
   const [claims, setClaims] = useState([])
@@ -39,7 +37,7 @@ function App() {
             <Routes>
               {rutas.map(ruta =>
                 <Route key={ruta.path} path={ruta.path}
-                  element={ruta.esAdmin && esAdmin() ? <>Acceso denegado, no estas autorizado</> : <ruta.componente />}>
+                  element={ruta.esAdmin && !esAdmin() ? <>Acceso denegado, no estas autorizado</> : <ruta.componente />}>
                 </Route>
               )}
             </Routes>

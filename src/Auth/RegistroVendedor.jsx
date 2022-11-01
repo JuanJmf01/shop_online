@@ -42,7 +42,6 @@ export default function RegistroVendedor() {
         }
     }
 
-    
 
     return (
         <>
@@ -84,7 +83,7 @@ export default function RegistroVendedor() {
                             onChange={(e) => setInstagram(e.currentTarget.checked)} checked={instagram} />
                         {!instagram ? <></> :
                             <Input type='text' label='Link negocio/cuenta-personal'
-                                campo='facebook' placeholder='Link negocio o cuenta personal' />
+                                campo='instagram' placeholder='Link negocio o cuenta personal' />
                         }
                         <br />
 

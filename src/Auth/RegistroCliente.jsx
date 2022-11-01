@@ -19,6 +19,7 @@ export default function RegistroCliente() {
             guardarTokenLocalStorage(respuesta.data)
             actualizar(obtenerClaims())
             console.log(respuesta.data)
+            registroSecundario(credenciales)
             navigate('/login')
         }catch(error){
             console.log(error.response.data)
@@ -46,7 +47,6 @@ export default function RegistroCliente() {
             }}
                 onSubmit={async valores => {
                     await registroPrincipal(valores)
-                    await registroSecundario(valores)
                     console.log(valores)
                 }}
             >

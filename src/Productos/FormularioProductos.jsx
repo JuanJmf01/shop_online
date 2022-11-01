@@ -29,7 +29,7 @@ export default function FormularioProductos(props) {
                     valores.oferta = oferta
                     console.log(valores.oferta)
                     console.log(valores.categoriasIds)
-                    valores.vendedoresIds = [4]
+                    valores.vendedoresIds = [1]
                     props.onSubmit(valores, acciones)
                 }}
 

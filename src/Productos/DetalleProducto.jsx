@@ -98,9 +98,6 @@ export default function DetalleProducto() {
 
                         </div>
 
-
-
-
                         <div>
                             <h4>Precio</h4>
                             <div><h5>$ {producto.precio}</h5></div>
