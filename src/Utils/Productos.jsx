@@ -23,7 +23,7 @@ export default function Productos() {
             <br />
             <ListadoDeProductos productos={productos.productos} />
             <br />
-            <h3>Oferta</h3>
+            <h3>Ofertas</h3>
             <ListadoDeProductos productos={productos.ofertas} />
 
         </>

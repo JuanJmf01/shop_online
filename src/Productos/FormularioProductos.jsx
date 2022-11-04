@@ -1,8 +1,11 @@
+import axios from "axios";
 import { Form, Formik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Yup from 'yup'
+import { AutenticationContextt } from "../App";
 import Button from "../Utils/Button";
+import { urlUsuarios } from "../Utils/endpoinds";
 import FormGroupCheckBox from "../Utils/FormGroupCheckBox";
 import FormGroupImagen from "../Utils/FormGroupImagen";
 import Input from "../Utils/Input";
@@ -10,15 +13,34 @@ import SelectorMultiple from "../Utils/SelectorMultiple";
 
 export default function FormularioProductos(props) {
 
+    const [vendedor, setVendedor] = useState()
     const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState(mapear(props.categoriasSeleccionadas))
     const [categoriasNoSeleccionadas, setCategoriasNoSeleccionadas] = useState(mapear(props.categoriasNoSeleccionadas))
     const [oferta, setOferta] = useState(props.oferta)
+
+    const { claims } = useContext(AutenticationContextt)
+
 
     function mapear(arreglo) {
         return arreglo.map(valor => {
             return { llave: valor.id, valor: valor.nombre }
         })
     }
+
+    function obtenerNombreUsuario() {
+        return claims.filter(x => x.nombre === 'email')[0]?.valor
+    }
+
+    function obtenerVendedor() {
+        axios.get(`${urlUsuarios}/${obtenerNombreUsuario()}`)
+            .then((respuesta) => {
+                setVendedor(respuesta.data.id)
+            })
+    }
+
+    useState(() => {
+        obtenerVendedor()
+    }, [])
 
     return (
         <div>
@@ -29,7 +51,7 @@ export default function FormularioProductos(props) {
                     valores.oferta = oferta
                     console.log(valores.oferta)
                     console.log(valores.categoriasIds)
-                    valores.vendedoresIds = [1]
+                    valores.vendedoresIds = [vendedor]
                     props.onSubmit(valores, acciones)
                 }}
 

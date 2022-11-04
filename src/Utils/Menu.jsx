@@ -7,11 +7,11 @@ import Button from "./Button";
 
 export default function Menu() {
 
-    const {actualizar, claims} = useContext(AutenticationContextt)
+        const { actualizar, claims } = useContext(AutenticationContextt)
 
-    function obtenerNombreUsuario(){
-        return claims.filter(x => x.nombre === 'email')[0]?.valor
-    }
+        function obtenerNombreUsuario() {
+            return claims.filter(x => x.nombre === 'email')[0]?.valor
+        }
 
     return (
         <>
@@ -59,16 +59,15 @@ export default function Menu() {
                             </div>
                         </li>
                     </ul>
-
                     <div className="d-flex">
                         <Autorizado
                             autorizado={<>
-                                <span className="nav-link">Bienvenido  {obtenerNombreUsuario()}</span>
+                                <span className="nav-link">Bienvenido {obtenerNombreUsuario()}</span>
                                 <Button
-                                onClick={() => {
-                                    logout()
-                                    actualizar([])
-                                }}
+                                    onClick={() => {
+                                        logout()
+                                        actualizar([])
+                                    }}
                                     className="nav-link btn btn-link"
                                 >Log Out</Button>
                             </>}
@@ -80,7 +79,6 @@ export default function Menu() {
                     </div>
                 </div>
             </nav>
-
         </>
     )
 }

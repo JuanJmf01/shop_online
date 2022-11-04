@@ -1,24 +1,41 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AutenticationContextt } from "../../App"
 import AlertaContext from "../../Utils/AlertaContext"
-import { urlProductos } from "../../Utils/endpoinds"
+import { urlProductos, urlUsuarios } from "../../Utils/endpoinds"
 import ListadoDeMisProductos from "../Components/ListadoDeMisProductos"
 
 export default function MisProductos() {
 
+    const { claims } = useContext(AutenticationContextt)
+
+    const [vendedor, setVendedor] = useState()
     const [misProductos, setMisProductos] = useState({})
 
-    useEffect(() => {
-        cargarProductos()
-    }, [])
+    function obtenerNombreUsuario() {
+        return claims.filter(x => x.nombre === 'email')[0]?.valor
+    }
 
-    function cargarProductos() {
-        axios.get(`${urlProductos}/MisProductos/${1}`)
+    function obtenerVendedor() {
+        axios.get(`${urlUsuarios}/${obtenerNombreUsuario()}`)
             .then((respuesta) => {
-                setMisProductos(respuesta.data)
-                console.log(respuesta.data)
+                setVendedor(respuesta.data.id)
             })
     }
+
+    function cargarProductos() {
+        axios.get(`${urlProductos}/MisProductos/${vendedor}`)
+            .then((respuesta) => {
+                setMisProductos(respuesta.data)
+            })
+    }
+
+
+    useEffect(() => {
+        obtenerVendedor()
+        cargarProductos()
+    }, [vendedor])
+
 
     return (
         <>

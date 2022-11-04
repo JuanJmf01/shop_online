@@ -9,8 +9,6 @@ import FormGroupCheckBox from "../Utils/FormGroupCheckBox";
 import Input from "../Utils/Input";
 import { guardarTokenLocalStorage, obtenerClaims } from "./manejadorJWT";
 
-
-
 export default function RegistroVendedor() {
 
     const [facebook, setFacebook] = useState(false)

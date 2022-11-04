@@ -63,8 +63,7 @@ export default function CrearProducto() {
                     }}
                     onSubmit={async valores => {
                         await crear(valores)
-                        console.log(valores)
-                        //navigate('/misProductos')
+                        navigate('/misProductos')
                     }}
                 /> : <Cargando />}
         </div >

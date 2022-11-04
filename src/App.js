@@ -11,6 +11,7 @@ export const AutenticationContextt = React.createContext()
 
 function App() {
 
+  configurarInterceptor()
   const [claims, setClaims] = useState([])
 
   useEffect(() => {

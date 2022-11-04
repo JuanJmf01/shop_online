@@ -34,7 +34,7 @@ export default function DetalleProducto() {
                 setVendedor(respuesta.data.vendedores[0])
                 console.log(respuesta.data)
             })
-    }, [id])
+    }, [])
 
     function calcularTotal(cantidad, precio) {
         var total = cantidad * precio
@@ -212,7 +212,7 @@ export default function DetalleProducto() {
                 </div>
 
                 <br />
-                <div>
+                {/* <div>
                     <Link
                         onClick={() => confirmar(() => borrarProducto())}
                         className="btn btn-danger btn-sm rounded-pill">Borrar</Link>
@@ -220,7 +220,7 @@ export default function DetalleProducto() {
                         className="btn btn-primary btn-sm rounded-pill"
                         to={`/productos/editar/${id}`}
                     >Modificar</Link>
-                </div>
+                </div> */}
             </div> : <Cargando />}
         </>
     )
