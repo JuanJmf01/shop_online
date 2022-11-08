@@ -35,7 +35,8 @@ export default function Login() {
                 password: ''
             }}
                 onSubmit={async valores => {
-                    login(valores)
+                    await login(valores)
+                    console.log(valores)
                 }}
             >
                 {formikProps => (

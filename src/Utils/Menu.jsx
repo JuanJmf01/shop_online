@@ -1,17 +1,36 @@
+import axios from "axios";
+import { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AutenticationContextt } from "../App";
 import Autorizado from "../Auth/Autorizado";
 import { logout } from "../Auth/manejadorJWT";
 import Button from "./Button";
+import { urlUsuarios, urlVendedores } from "./endpoinds";
 
 export default function Menu() {
 
-        const { actualizar, claims } = useContext(AutenticationContextt)
+    const { actualizar, claims } = useContext(AutenticationContextt)
+    const [vendedor, setVendedor] = useState()
 
-        function obtenerNombreUsuario() {
-            return claims.filter(x => x.nombre === 'email')[0]?.valor
-        }
+    function obtenerNombreUsuario() {
+        return claims.filter(x => x.nombre === 'email')[0]?.valor
+    }
+
+    // function obtenerVendedor(user) {
+    //     axios.get(`${urlUsuarios}/${user}`)
+    //         .then((respuesta) => {
+    //             setVendedor(respuesta.data.nombres)
+    //         })
+
+    //     if (!vendedor) {
+    //         axios.get(`${urlVendedores}/${user}`)
+    //             .then((respuesta) => {
+    //                 setVendedor(respuesta.data.nombres)
+    //             })
+    //     }
+    //     return vendedor
+    // }
 
     return (
         <>
@@ -62,7 +81,9 @@ export default function Menu() {
                     <div className="d-flex">
                         <Autorizado
                             autorizado={<>
-                                <span className="nav-link">Bienvenido {obtenerNombreUsuario()}</span>
+                                <span className="nav-link">
+                                    Bienvenido {obtenerNombreUsuario()}
+                                </span>
                                 <Button
                                     onClick={() => {
                                         logout()

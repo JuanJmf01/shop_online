@@ -26,7 +26,7 @@ export default function RegistroVendedor() {
             console.log(respuesta.data)
             registroSecundario(credenciales)
             navigate('/login')
-        }catch(error){
+        } catch (error) {
             console.log(error.response.data)
         }
     }

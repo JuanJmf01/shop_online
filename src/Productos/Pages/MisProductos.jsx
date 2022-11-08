@@ -2,7 +2,7 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { AutenticationContextt } from "../../App"
 import AlertaContext from "../../Utils/AlertaContext"
-import { urlProductos, urlUsuarios } from "../../Utils/endpoinds"
+import { urlProductos, urlUsuarios, urlVendedores } from "../../Utils/endpoinds"
 import ListadoDeMisProductos from "../Components/ListadoDeMisProductos"
 
 export default function MisProductos() {
@@ -17,7 +17,7 @@ export default function MisProductos() {
     }
 
     function obtenerVendedor() {
-        axios.get(`${urlUsuarios}/${obtenerNombreUsuario()}`)
+        axios.get(`${urlVendedores}/${obtenerNombreUsuario()}`)
             .then((respuesta) => {
                 setVendedor(respuesta.data.id)
             })
