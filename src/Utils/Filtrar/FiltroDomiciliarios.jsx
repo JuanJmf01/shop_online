@@ -7,22 +7,15 @@ import Model from "../Models/Model";
 
 export default function FiltroDomiciliarios() {
 
+    const [domiciliarios, setDomiciliarios] = useState([])
     const [stateDomiciliario, setStateDomiciliario] = useState(false)
 
-    const domiciliarios = [
-        {
-            id: 1,
-            nombre: 'Tuco salamanca'
-        },
-        {
-            id: 2,
-            nombre: 'Francisco'
-        },
-        {
-            id: 3,
-            nombre: 'Maria Fernanada'
-        }
-    ]
+
+    const valorInicial = {
+        nombres: '',
+        apellidos: '',
+        stateVendedor: false
+    }
 
     return (
         <>
@@ -38,7 +31,8 @@ export default function FiltroDomiciliarios() {
 
                 {(formikProps) => (
                     <Form>
-                        <Input label='Nombre domiciliario' campo='nombre' type='text' placeholder="Nombre" />
+                        <Input label='Nombre domiciliario' campo='nombres' type='text' placeholder="Nombre" />
+                        <Input label='Apelñlido domiciliario' campo='apellidos' type='text' placeholder="Nombre" />
                         <label htmlFor="">¿Activo? ¿Inactivo?</label>
                         <Field className='form-check-input' id='activo' name='activo' type='checkbox' />
 

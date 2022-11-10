@@ -28,6 +28,7 @@ function App() {
     return claims.findIndex(claim => claim.nombre === 'role' && claim.valor === 'vendedor') > -1
   }
 
+  //Prueba
 
   return (
     <div>
