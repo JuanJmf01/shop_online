@@ -6,7 +6,7 @@ export default function Input(props) {
         <>
             <div className='form-group'>
                 {props.label ? <label htmlFor={props.campo}>{props.label}</label> : null}
-                <Field className='form-control'
+                <Field className='form-control '
                     type={props.type}
                     name={props.campo}
                     placeholder={props.placeholder}

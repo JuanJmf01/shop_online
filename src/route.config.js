@@ -24,9 +24,9 @@ export const rutas = [
 
 
     { path: '/productos', componente: Productos },
-    { path: '/misProductos', componente: MisProductos, esAdmin: true },
-    { path: '/productos/crear', componente: CrearProducto, esAdmin: true },
-    { path: '/productos/editar/:id', componente: EditarProducto, esAdmin: true },
+    { path: '/misProductos', componente: MisProductos, esAdmin: false },
+    { path: '/productos/crear', componente: CrearProducto, esAdmin: false },
+    { path: '/productos/editar/:id', componente: EditarProducto, esAdmin: false },
     { path: '/productos/:id', componente: DetalleProducto },
 
     

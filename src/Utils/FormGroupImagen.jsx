@@ -35,7 +35,7 @@ export default function FormGroupImagen(props) {
         <div className="form-group">
             <label>{props.label}</label>
             <div>
-                <input type="file" accept=".jpg,.jpeg,.png" onChange={ManejarOnChange} />
+                <input class="form-control" type="file" accept=".jpg,.jpeg,.png" onChange={ManejarOnChange} />
             </div>
             {imagenBase64 ?
                 <div>

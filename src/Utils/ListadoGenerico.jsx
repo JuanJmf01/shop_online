@@ -5,7 +5,7 @@ export default function ListadoGenerico(props) {
         if (props.cargandoUI) {
             return props.cargandoUI
         }
-        return <Cargando />
+        return  <Cargando />
     } else if (props.listado.length === 0) {
         if (props.listadoVacioUI) {
             return props.listadoVacioUI

@@ -21,7 +21,7 @@ export default function FormularioProductos(props) {
     }
 
     return (
-        <div>
+        <div class="p-3">
             <Formik
                 initialValues={props.modelo}
                 onSubmit={(valores, acciones) => {
@@ -34,24 +34,24 @@ export default function FormularioProductos(props) {
                 }}
 
                 validationSchema={Yup.object({
-                    nombre: Yup.string().required('Este campo es requerido')
+                    nombre: Yup.string().required('Este campo es requerido'
+                    )
 
                 })}
             >
 
                 {(formikProps) => (
-                    <Form>
-                        <label htmlFor="">IMPORTANTE..!!</label>
+                    <Form >
                         <FormGroupCheckBox label='¿Producto en oferta?'
                             onChange={(e) => setOferta(e.currentTarget.checked)}
                             checked={oferta}
                             campo='oferta' />
                         <br />
-                        {!oferta ? <div>
+                        {!oferta ? <div >
                             <Input type='text' campo='nombre' label='Nombre Producto' placeholder='nombre Producto' />
-                            <Input type='number' campo='precio' label='Precio del producto' />
-                            <Input type='text' campo='descripcion' label='Descripcion de producto' />
-                            <Input type='number' campo='cantidadDisponible' label='Cantidad disponible' />
+                            <Input type='number' campo='precio' label='Precio del producto' placeholder='Precio del producto'/>
+                            <Input type='text' campo='descripcion' label='Descripcion de producto' placeholder='Descripcion de producto'/>
+                            <Input type='number' campo='cantidadDisponible' label='Cantidad disponible' placeholder='Cantidad disponible'/>
                         </div> : <div>
                             <Input type='text' campo='nombre' label='Titulo oferta' placeholder='...' />
                             <Input type='number' campo='precio' label='Precio de oferta' />
@@ -75,9 +75,10 @@ export default function FormularioProductos(props) {
                                 }}
                             />
                         </div>
-
-                        <Button disabled={formikProps.isSubmitting} type='submit'>Enviar</Button>
-                        <Link className='btn btn-secondary' to='/'>Cancelar</Link>
+                        <div style={{ display: 'flex' }}>
+                            <Button className="btn btn-outline-secondary" disabled={formikProps.isSubmitting} type='submit'>Enviar</Button>
+                            <Link className='btn btn-danger' to='/'>Cancelar</Link>
+                        </div>
                     </Form>
                 )}
 
