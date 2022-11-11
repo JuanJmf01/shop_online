@@ -43,6 +43,7 @@ export default function FiltroVendedores() {
 
     return (
         <>
+        <div class="container-fluid col-8 mt-5">
             <h3>Filtro vendedores</h3>
             <Formik initialValues={valorInicial}
                 onSubmit={async valores => {
@@ -55,13 +56,13 @@ export default function FiltroVendedores() {
                         <Input label='Nombres' campo='nombres' type='text' placeholder="Nombres" />
                         <Input label='Apellidos' campo='apellidos' type='text' placeholder="Apellidos" />
                         <Field className='form-check-input' id='stateVendedor' name='stateVendedor' type='checkbox' />
-                        <label htmlFor="">¿Activo? ¿Inactivo?</label>
+                        <label class="mtl-5" htmlFor=""> ¿Activo?</label>
 
                         <div style={{ display: 'flex' }}>
-                            <Button className='btn btn-primary'
+                            <Button className='btn btn-outline-secondary mt-1'
                                 type='submit'
                             >Buscar</Button>
-                            <Button className='btn btn-danger'
+                            <Button className='btn btn-outline-danger mt-1'
                                 type='submit'
                                 onClick={() => {
                                     formikProps.setValues(valorInicial)
@@ -72,8 +73,8 @@ export default function FiltroVendedores() {
                     </Form>
                 )}
             </Formik>
-
-            <table className='table table-striped'>
+        </div>
+            <table className='table table-striped mt-3'>
                 <thead>
                     <tr>
                         <th>Nombres</th>
@@ -86,7 +87,7 @@ export default function FiltroVendedores() {
                             <td>{vendedor.nombres} {vendedor.apellidos}</td>
                             <td>
                                 <Button
-                                    className='btn btn-primary'
+                                    className='btn btn-outline-secondary mt-1'
                                     type='submit'
                                     onClick={() => {
                                         setVendedorDisponible(vendedor.stateVendedor)

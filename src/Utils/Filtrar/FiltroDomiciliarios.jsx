@@ -26,53 +26,55 @@ export default function FiltroDomiciliarios() {
 
     return (
         <>
+        <div class="container-fluid col-8 mt-5">
             <h3>Filtro domiciliarios</h3>
             <Formik initialValues={{
-                nombre: '',
-                activo: false
-            }}
-                onSubmit={async valores => {
-                    console.log(valores)
+                    nombre: '',
+                    activo: false
                 }}
-            >
+                    onSubmit={async valores => {
+                        console.log(valores)
+                    }}
+                >
 
-                {(formikProps) => (
-                    <Form>
-                        <Input label='Nombre domiciliario' campo='nombre' type='text' placeholder="Nombre" />
-                        <label htmlFor="">¿Activo? ¿Inactivo?</label>
-                        <Field className='form-check-input' id='activo' name='activo' type='checkbox' />
+                    {(formikProps) => (
+                        <Form>
+                            <Input label='Nombre domiciliario' campo='nombre' type='text' placeholder="Nombre" />
+                            <Field className='form-check-input' id='activo' name='activo' type='checkbox' />
+                            <label htmlFor="">¿Activo?</label>
+                            
 
 
-                        <Button className='btn btn-primary' type='submit'>Buscar</Button>
+                            <Button className='btn btn-outline-secondary mt-1' type='submit'>Buscar</Button>
 
-                    </Form>
-                )}
+                        </Form>
+                    )}
             </Formik>
 
-            <table className='table table-striped'>
-                <thead>
-                    <tr>
-                        <th>Nombres</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {domiciliarios?.map(domiciliario =>
-                        <tr key={domiciliario.id}>
-                            <td>{domiciliario.nombre}</td>
-                            <td>
-                                <button
-                                    className='btn btn-primary'
-                                    type='submit'
-                                    onClick={() => setStateDomiciliario(true)}>
-                                    Ver</button>
-
-                            </td>
+                <table className='table table-striped mt-3'>
+                    <thead>
+                        <tr>
+                            <th>Nombres</th>
+                            <th></th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {domiciliarios?.map(domiciliario =>
+                            <tr key={domiciliario.id}>
+                                <td>{domiciliario.nombre}</td>
+                                <td>
+                                    <button
+                                        className='btn btn-outline-secondary mt-1'
+                                        type='submit'
+                                        onClick={() => setStateDomiciliario(true)}>
+                                        Ver</button>
 
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
             {stateDomiciliario ? <Model title="Informacion Domiciliario">
                 <Button className='btn btn-danger'
                     type='submit'

@@ -18,7 +18,7 @@ export default function InformacionPersonal() {
 
     const id = 1
 
-    useEffect(() => {
+    /*useEffect(() => {
         axios.get(`${urlVendedores}/${id}`)
             .then((respuesta) => {
                 setVendedor(respuesta.data)
@@ -27,80 +27,83 @@ export default function InformacionPersonal() {
 
                 console.log(respuesta.data)
             })
-    }, [])
+    }, [])*/
 
     return (
         <>
-            {vendedor ? <div>
+            {/*vendedor ?*/ <div class="container-fluid col-8 mt-5">
                 <h3>Informacion Personal</h3>
                 <br />
-                <Formik initialValues={{
-                    nombres: vendedor.nombres,
-                    apellidos: vendedor.apellidos,
-                    email: vendedor.email,
-                    numeroCelular: vendedor.numeroCelular
+                <div class="border border-secondary rounded-3 shadow mb-5 bg-body rounded">
+                    <Formik /*initialValues={{
+                        nombres: vendedor.nombres,
+                        apellidos: vendedor.apellidos,
+                        email: vendedor.email,
+                        numeroCelular: vendedor.numeroCelular
 
-                }}
-                    onSubmit={async valores => {
-                        valores.stateDomiciliario = stateDomi
-                        valores.stateVendedor = stateVendedor
-                        console.log(valores)
                     }}
-                >
+                        onSubmit={async valores => {
+                            valores.stateDomiciliario = stateDomi
+                            valores.stateVendedor = stateVendedor
+                            console.log(valores)
+                        }}*/
+                    >
 
-                    {(formikProps) => (
-                        <Form>
-                            <div>
-                                <Input
-                                    type='text'
-                                    campo='nombres'
-                                    label='Nombres' />
-                            </div>
-                            <div>
-                                <Input
-                                    type='text'
-                                    campo='apellidos'
-                                    label='Apellidos' />
-                            </div>
+                        {/*(formikProps) => (*/
+                            <Form className="p-3">
+                                <div>
+                                    <Input
+                                        type='text'
+                                        campo='nombres'
+                                        label='Nombres' />
+                                </div>
+                                <div>
+                                    <Input
+                                        type='text'
+                                        campo='apellidos'
+                                        label='Apellidos' />
+                                </div>
 
-                            <div>
-                                <Input
-                                    type='text'
-                                    campo='email'
-                                    label='Email' />
-                            </div>
-                            <div>
-                                <Input
-                                    type='number'
-                                    campo='numeroCelular'
-                                    label='Numero de celular' />
-                            </div>
-                            <br />
-                            <div>
-                                <FormGroupCheckBox label='domiciliario activo?'
-                                    onChange={((e) => setStateDomi(e.currentTarget.checked))}
-                                    checked={stateDomi}
-                                    campo='oferta' />
-                            </div>
-                            <div>
-                                <FormGroupCheckBox label='¿Vendedor activo?'
-                                    onChange={(e) => setStateVendedor(e.currentTarget.checked)}
-                                    checked={stateVendedor}
-                                    campo='oferta' />
-                            </div>
-
-
-                            <Button className='btn btn-primary' type='submit'>
-                                Guardar
-                            </Button>
+                                <div>
+                                    <Input
+                                        type='text'
+                                        campo='email'
+                                        label='Email' />
+                                </div>
+                                <div>
+                                    <Input
+                                        type='number'
+                                        campo='numeroCelular'
+                                        label='Numero de celular' />
+                                </div>
+                                <br />
+                                <div>
+                                    <FormGroupCheckBox label='domiciliario activo?'
+                                        onChange={((e) => setStateDomi(e.currentTarget.checked))}
+                                        checked={stateDomi}
+                                        campo='oferta' />
+                                </div>
+                                <div>
+                                    <FormGroupCheckBox label='¿Vendedor activo?'
+                                        onChange={(e) => setStateVendedor(e.currentTarget.checked)}
+                                        checked={stateVendedor}
+                                        campo='oferta' />
+                                </div>
 
 
-                        </Form>
-                    )}
+                                <Button className='btn btn-primary' type='submit'>
+                                    Guardar
+                                </Button>
 
-                </Formik>
+
+                            </Form>
+                    /*  )*/}
+
+                    </Formik>
+                </div>
+                
             </div>
-                : <Cargando />}
+                /*: <Cargando /> */ }
         </>
     )
 }

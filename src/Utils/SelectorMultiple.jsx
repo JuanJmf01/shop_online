@@ -29,7 +29,7 @@ export default function SelectorMultiple(props) {
                     <li key={item.llave} onClick={() => seleccionar(item)}>{item.valor}</li>)}                    
             </ul>
             <div className="selector-multiple-botones">
-                    <button type="button" onClick={deseleccionarTodo}>{'<<'}</button>
+                    <button type="button" class="btn btn-outline-secondary" onClick={deseleccionarTodo}>{'<<'}</button>
             </div>
             <ul>
                 {props.seleccionados.map(item => 

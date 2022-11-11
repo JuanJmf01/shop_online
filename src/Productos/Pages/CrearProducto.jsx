@@ -45,9 +45,11 @@ export default function CrearProducto() {
     }
 
     return (
-        < div >
-            <h3>Crear Productos</h3>
+        < div class="container-fluid col-8 mt-5">
+            <h3 class="">Crear Productos</h3>
+            <div class="border border-secondary rounded-3 shadow mb-5 bg-body rounded">
             {cargado ?
+
                 <FormularioProductos
                     oferta = {false}
                     categoriasNoSeleccionadas={categoriasNoSeleccionadas}
@@ -66,6 +68,7 @@ export default function CrearProducto() {
                         //navigate('/misProductos')
                     }}
                 /> : <Cargando />}
+            </div>
         </div >
     )
 }

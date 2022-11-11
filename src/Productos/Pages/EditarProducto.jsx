@@ -53,8 +53,6 @@ export default function EditarProducto() {
             {producto ?
                 <div>
                     <h3>Editar producto</h3>
-                    {/* <h4>{productoPutGet.producto.vendedores[0].id}</h4> */}
-
                     <FormularioProductos
                         oferta={producto.oferta}
                         categoriasNoSeleccionadas={productoPutGet.categoriasNoSeleccionadas}
