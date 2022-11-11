@@ -1,6 +1,5 @@
 import ProductoIndividual from "./ProductoIndividual";
 import './css/listadoDeProductos.css'
-import Cargando from "../Utils/Cargando";
 import ListadoGenerico from "../Utils/ListadoGenerico";
 
 export default function ListadoDeProductos(props) {

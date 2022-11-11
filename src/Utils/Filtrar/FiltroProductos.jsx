@@ -38,17 +38,17 @@ export default function FiltroProductos() {
 
     return (
         <>
-        <div class="container-fluid col-8 mt-5">
-            <h3 class=" " >Buscar Producto</h3>
-            <Formik initialValues={valorInicial}
-                onSubmit={async valores => {
-                    filtrar(valores)
-                }}
-            >
+            <div class="container-fluid col-8 mt-3">
+                <h3 class=" " >Buscar Producto</h3>
+                <Formik initialValues={valorInicial}
+                    onSubmit={async valores => {
+                        filtrar(valores)
+                    }}
+                >
 
-                {(formikProps) => (
-                    <Form>
-                        
+                    {(formikProps) => (
+                        <Form>
+
                             <Input label='Nombre producto' campo='nombre' type='text' placeholder="Nombre" />
                             <label>Categoria</label>
                             <div className="form-group mb-2">
@@ -64,7 +64,7 @@ export default function FiltroProductos() {
                             <label htmlFor="oferta"> ¿Producto en oferta?</label>
 
 
-                            <div style={{display: 'flex'}}>
+                            <div style={{ display: 'flex' }}>
                                 <Button disabled={formikProps.isSubmitting}
                                     className='btn btn-outline-secondary mt-1'
                                     type='submit'><i class="glyphicon glyphicon-search"></i>
@@ -79,13 +79,18 @@ export default function FiltroProductos() {
                                     }}
                                 >Limpiar</Button>
                             </div>
-                    </Form>
-                )}
+                        </Form>
+                    )}
 
-            </Formik>
+                </Formik>
+            </div>
+            <br />
+            <br />
 
-            <ListadoDeProductos productos={productos} />
-        </div>
+            <div className="" style={{paddingLeft: "8rem"}}>
+                <ListadoDeProductos productos={productos} />
+            </div>
+
         </>
     )
 }

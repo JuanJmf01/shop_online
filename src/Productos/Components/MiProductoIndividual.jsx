@@ -5,6 +5,7 @@ import AlertaContext from "../../Utils/AlertaContext";
 import Button from "../../Utils/Button";
 import confirmar from "../../Utils/ConfirmarDelete";
 import { urlProductos } from "../../Utils/endpoinds";
+import './css/miProductoIndividual.css'
 
 export default function MiProductoIndividual(props) {
 
@@ -13,15 +14,15 @@ export default function MiProductoIndividual(props) {
 
     function borrarProducto() {
         axios.delete(`${urlProductos}/${props.producto.id}`)
-        .then(() => {
-            alerta()
-        })
+            .then(() => {
+                alerta()
+            })
     }
 
     return (
         <>
-            <div className='component'>
-                <div className="subComponent">
+            <div className='card col-3 shadow p-4 mb-52 bg-body rounded component'>
+                <div>
                     <Link to={construirLink()}>
                         <img src={props.producto.imagenProducto} alt="Poster" />
                     </Link>
@@ -32,13 +33,13 @@ export default function MiProductoIndividual(props) {
                 </div>
 
                 <div className="buttons">
-                    <Link style={{ marginRight: '0.7rem', color: '#fff' }} className='btn btn-primary'
+                    <Link style={{ marginRight: '0.7rem', }} className='btn btn-outline-secondary'
                         to={`/productos/editar/${props.producto.id}`}>
                         Editar
                     </Link>
                     <Button
                         onClick={() => confirmar(() => borrarProducto())}
-                        className="btn btn-danger">Borrar</Button>
+                        className="btn btn-outline-danger">Borrar</Button>
                 </div>
             </div>
         </>

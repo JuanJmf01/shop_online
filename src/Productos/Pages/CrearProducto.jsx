@@ -40,35 +40,35 @@ export default function CrearProducto() {
         catch (error) {
             setErrores(error.response.data)
             console.log(error.response.data)
-
         }
     }
 
     return (
-        < div class="container-fluid col-8 mt-5">
-            <h3 class="">Crear Productos</h3>
+        <div className="container-fluid col-8 mt-5">
+            <h3>Crear Productos</h3>
             <div class="border border-secondary rounded-3 shadow mb-5 bg-body rounded">
-            {cargado ?
+                {cargado ?
+                    <FormularioProductos
+                        oferta={false}
+                        categoriasNoSeleccionadas={categoriasNoSeleccionadas}
+                        categoriasSeleccionadas={[]}
+                        modelo={{
+                            nombre: '',
+                            precio: '',
+                            descripcion: '',
+                            cantidadDisponible: '',
+                            disponible: true,
+                            imagenProducto: ''
 
-                <FormularioProductos
-                    oferta = {false}
-                    categoriasNoSeleccionadas={categoriasNoSeleccionadas}
-                    categoriasSeleccionadas={[]}
-                    modelo={{
-                        nombre: '',
-                        precio: '',
-                        descripcion: '',
-                        cantidadDisponible: '',
-                        disponible: true,
-                        imagenProducto: ''
+                        }}
+                        onSubmit={async valores => {
+                            await crear(valores)
+                            navigate('/misProductos')
+                        }}
+                    /> : <Cargando />}
 
-                    }}
-                    onSubmit={async valores => {
-                        await crear(valores)
-                        //navigate('/misProductos')
-                    }}
-                /> : <Cargando />}
             </div>
+
         </div >
     )
 }
