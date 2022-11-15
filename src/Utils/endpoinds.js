@@ -8,4 +8,6 @@ export const urlCategorias = `${apiURL}/categorias`
 export const urlVendedores = `${apiURL}/vendedores`
 export const urlUsuarios = `${apiURL}/usuarios`
 export const urlRatings = `${apiURL}/rating`
+export const urlCompras = `${apiURL}/misCompras`
+export const urlVentas = `${apiURL}/misVentas`
 

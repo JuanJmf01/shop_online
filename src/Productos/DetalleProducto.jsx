@@ -4,13 +4,14 @@ import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import Button from "../Utils/Button"
 import Cargando from "../Utils/Cargando"
-import { urlProductos, urlRatings } from "../Utils/endpoinds"
+import { urlCompras, urlProductos, urlRatings, urlUsuarios, urlVendedores } from "../Utils/endpoinds"
 import Model from "../Utils/Models/Model"
-import AlertaContext from "../Utils/AlertaContext"
 import './css/detalleProducto.css'
-import confirmar from "../Utils/ConfirmarDelete"
 import Rating from "../Utils/Rating"
 import Swal from "sweetalert2"
+import Autorizado from "../Auth/Autorizado"
+import { Formik } from "formik"
+import { AutenticationContextt, nombreUsuario } from "../App"
 
 export default function DetalleProducto() {
 
@@ -19,11 +20,49 @@ export default function DetalleProducto() {
     const [cantidad, setCantidad] = useState(1)
     const [producto, setProducto] = useState()
     const [vendedor, setVendedor] = useState({})
+    const [cliente, setCliente] = useState()
+    const [esCliente, setEsCliente] = useState(true)
 
-    const alerta = useContext(AlertaContext)
+    const { claims } = useContext(AutenticationContextt)
+
+    //const alerta = useContext(AlertaContext)
 
     const { id } = useParams()
     //const navigate = useNavigate()
+
+
+    const compra = {
+        vendido: false,
+        esCliente: esCliente,
+        clienteId: cliente,
+        vendedorId: vendedor.id,
+        productoId: id
+    }
+
+    function obtenerNombreUsuario() {
+        return claims.filter(x => x.nombre === 'email')[0]?.valor
+    }
+
+    function obtenerUsuario() {
+        axios.get(`${urlUsuarios}/${obtenerNombreUsuario()}`)
+            .then((respuesta) => {
+                setCliente(respuesta.data.id)
+                setEsCliente(true)
+            })
+        if (cliente == null) {
+            axios.get(`${urlVendedores}/${obtenerNombreUsuario()}`)
+                .then((respuesta) => {
+                    setCliente(respuesta.data.id)
+                })
+            setEsCliente(false)
+
+        }
+    }
+
+    async function postCompra() {
+        await axios.post(urlCompras, compra)
+        Swal.fire({ icon: 'success', title: 'Venta en espera' });
+    }
 
 
     //Podemos traer por 'producto' por 'vendedores' y 'categorias'
@@ -34,23 +73,14 @@ export default function DetalleProducto() {
                 setVendedor(respuesta.data.vendedores[0])
                 console.log(respuesta.data)
             })
-    }, [])
+        obtenerUsuario()
+    }, [id, obtenerNombreUsuario()])
+
 
     function calcularTotal(cantidad, precio) {
         var total = cantidad * precio
 
         return total
-    }
-
-    function borrarProducto() {
-        try {
-            axios.delete(`${urlProductos}/${id}`)
-                .then(() => {
-                    alerta()
-                })
-        } catch (error) {
-            console.log(error.respuesta.data)
-        }
     }
 
     async function onVote(voto) {
@@ -72,7 +102,6 @@ export default function DetalleProducto() {
                             >{categoria.nombre}
                             </Link>)
                         }
-                        {console.log(producto.votoUsuario)}
                         | Voto Promedio : {producto.promedioVoto}
                         | Tu voto :  <Rating maximoValor={5}
                             valorSeleccionado={producto.votoUsuario}
@@ -189,6 +218,8 @@ export default function DetalleProducto() {
                         </div>
 
                         <div className="btns">
+
+                            <Button className='btn btn-primary' onClick={() => postCompra()}>Añadir a mis compras</Button>
                             <Button className='btn btn-danger' onClick={() => !setComprar()}>Cancelar</Button>
                         </div>
                     </div>
@@ -196,11 +227,15 @@ export default function DetalleProducto() {
                 }
 
                 <div>
-                    <Button
-                        type="submit"
-                        className="btn btn-success"
-                        onClick={() => setAñadirVenta(true)}
-                    >Añadir venta</Button>
+                    <Autorizado role="vendedor"
+                        autorizado={<>
+                            <Button
+                                type="submit"
+                                className="btn btn-success"
+                                onClick={() => setAñadirVenta(true)}
+                            >Añadir venta</Button>
+                        </>}
+                    />
                 </div>
                 <br />
                 <div>
@@ -212,15 +247,6 @@ export default function DetalleProducto() {
                 </div>
 
                 <br />
-                {/* <div>
-                    <Link
-                        onClick={() => confirmar(() => borrarProducto())}
-                        className="btn btn-danger btn-sm rounded-pill">Borrar</Link>
-                    <Link
-                        className="btn btn-primary btn-sm rounded-pill"
-                        to={`/productos/editar/${id}`}
-                    >Modificar</Link>
-                </div> */}
             </div> : <Cargando />}
         </>
     )

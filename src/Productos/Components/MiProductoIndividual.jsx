@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AlertaContext from "../../Utils/AlertaContext";
 import Button from "../../Utils/Button";
-import confirmar from "../../Utils/ConfirmarDelete";
+import confirmar from "../../Utils/ConfirmarAccion";
 import { urlProductos } from "../../Utils/endpoinds";
 import './css/miProductoIndividual.css'
 

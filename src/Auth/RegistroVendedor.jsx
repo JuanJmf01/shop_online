@@ -41,6 +41,22 @@ export default function RegistroVendedor() {
     }
 
 
+    async function hacerAdmin(email) {
+        axios.get(`${urlCuentas}/${email}`)
+            .then((respuesta) => {
+                editarAdmin(`${urlCuentas}/hacerVendedor`, respuesta.data.id);
+            })
+    }
+
+    async function editarAdmin(url, id) {
+        await axios.post(url, JSON.stringify(id),
+            {
+                headers: { 'Content-Type': 'application/json' }
+            }
+        )
+    }
+
+
     return (
         <>
             <h3>Registra tu negocio</h3>
@@ -57,6 +73,7 @@ export default function RegistroVendedor() {
             }}
                 onSubmit={async valores => {
                     await registroPrincipal(valores)
+                    await hacerAdmin(valores.email)
                     console.log(valores)
                 }}
             >

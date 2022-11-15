@@ -6,10 +6,7 @@ import { AutenticationContextt } from "../App";
 import Autorizado from "../Auth/Autorizado";
 import { logout } from "../Auth/manejadorJWT";
 import Button from "./Button";
-
-
-
-const image = require("./cohete.png").default;
+import './css/menu.css'
 
 export default function Menu() {
     const { actualizar, claims } = useContext(AutenticationContextt)
@@ -37,17 +34,14 @@ export default function Menu() {
         <>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Marketplace</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    <Link className="navbar-brand" to="/productos">Marketplace</Link>
+                    {/* <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <Link className="nav-link" to="/productos">Productos</Link>
-                            </li>
-                            <li class="nav-item">
+                    </button> */}
+                    <div className="collapse navbar-collapse" style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'smaller' }}>
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
                                 <Link className="nav-link" to="/ofertas">Ofertas</Link>
                             </li>
                             <li className="nav-item dropdown">
@@ -61,15 +55,21 @@ export default function Menu() {
                                     <Link className="dropdown-item" to='/filtro/domiciliarios'>Domiciliarios</Link>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <Link className="nav-link" to="/misCompras">Mis compras</Link>
+                            </li>
                             <Autorizado role="vendedor" autorizado={<>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/misProductos">Mis productos</Link>
-                                </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/misVentas">Mis ventas</Link>
                                 </li>
                                 <li className="nav-item">
+                                    <Link className="nav-link" to="/misProductos">Mis productos</Link>
+                                </li>
+                                <li className="nav-item">
                                     <Link className="nav-link" to="/productos/crear">Crear producto</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/usuarios">Usuarios</Link>
                                 </li>
                             </>
                             }
@@ -87,15 +87,14 @@ export default function Menu() {
                             </li>
                         </ul>
 
-
                         <div className="d-flex ">
                             <Autorizado autorizado={<>
-                                <span className="nav-link">Bienvenido {obtenerNombreUsuario()}</span>
+                                <span className="nav-link" style={{ color: "gray", paddingRight: "25px" }}>Bienvenido {obtenerNombreUsuario()}</span>
                                 <Button onClick={() => {
                                     logout()
                                     actualizar([])
                                 }}
-                                    className="btn btn-link text-secondary"
+                                    className="nav-link btn text-secondary"
                                 >Log Out</Button>
                             </>}
                                 noAutorizado={<>
