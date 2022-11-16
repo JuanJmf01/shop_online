@@ -58,10 +58,10 @@ export default function Menu() {
                             <li class="nav-item">
                                 <Link className="nav-link" to="/misCompras">Mis compras</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/misVentas">Mis ventas</Link>
+                            </li>
                             <Autorizado role="vendedor" autorizado={<>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/misVentas">Mis ventas</Link>
-                                </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/misProductos">Mis productos</Link>
                                 </li>

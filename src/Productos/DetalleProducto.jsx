@@ -11,7 +11,7 @@ import Rating from "../Utils/Rating"
 import Swal from "sweetalert2"
 import Autorizado from "../Auth/Autorizado"
 import { Formik } from "formik"
-import { AutenticationContextt, nombreUsuario } from "../App"
+import { AutenticationContextt } from "../App"
 
 export default function DetalleProducto() {
 
@@ -55,7 +55,6 @@ export default function DetalleProducto() {
                     setCliente(respuesta.data.id)
                 })
             setEsCliente(false)
-
         }
     }
 
@@ -90,6 +89,7 @@ export default function DetalleProducto() {
 
     return (
         <>
+            {console.log("ES ESTA", compra)}
             {producto ? <div>
 
                 {producto ? <div>
@@ -123,8 +123,6 @@ export default function DetalleProducto() {
                                     </div>
                                 </div>
                             </div> : null}
-
-
                         </div>
 
                         <div>
@@ -133,41 +131,7 @@ export default function DetalleProducto() {
                         </div>
                     </div>
                 </div> : <Cargando />}
-                {añadirVenta ? <Model title="Añadir venta">
-                    <div className="model">
-                        <div>
-                            <h5 >Producto:</h5>
-                            <label >{producto.nombre}</label>
-                        </div>
 
-                        <div>
-                            <h5 >Precio unidad:</h5>
-                            <label >{producto.precio}</label>
-                        </div>
-
-                        <h5>Cantidad vendida</h5>
-                        <div>
-                            <input className="form-control" type="number" onKeyUp={(e) => setCantidad(e.currentTarget.value)} />
-                        </div>
-                        <br />
-                        <div>
-                            <span>Fecha de venta</span>
-                            <input className="form-control" type='date' campo='fechaVenta' />
-                        </div>
-                        <hr />
-
-                        <div>
-                            <span>Total vendido</span>
-                            <input className="form-control" type="number" value={calcularTotal(cantidad, producto.precio)} />
-                        </div>
-                        <br />
-                        <div className="btns">
-                            <Button className='btn btn btn-success'>Añadir</Button>
-                            <Button className='btn btn-danger' onClick={() => !setAñadirVenta()}>Cancelar</Button>
-                        </div>
-                    </div>
-
-                </Model> : null}
                 {comprar ? <Model title="Confirmar compra">
                     <div className="model">
                         <div>
@@ -225,18 +189,6 @@ export default function DetalleProducto() {
                     </div>
                 </Model> : null
                 }
-
-                <div>
-                    <Autorizado role="vendedor"
-                        autorizado={<>
-                            <Button
-                                type="submit"
-                                className="btn btn-success"
-                                onClick={() => setAñadirVenta(true)}
-                            >Añadir venta</Button>
-                        </>}
-                    />
-                </div>
                 <br />
                 <div>
                     <Button
