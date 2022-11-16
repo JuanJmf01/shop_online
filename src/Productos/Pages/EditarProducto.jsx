@@ -50,24 +50,26 @@ export default function EditarProducto() {
 
     return (
         <>
-            <div>
-                {producto ?
-                    <div>
-                        <h3>Editar producto</h3>
-                        <div className="border border-secondary rounded-3 shadow mb-5 bg-body rounded">
-                            <FormularioProductos
-                                oferta={producto.oferta}
-                                categoriasNoSeleccionadas={productoPutGet.categoriasNoSeleccionadas}
-                                categoriasSeleccionadas={productoPutGet.categoriasSeleccionadas}
-                                modelo={producto}
-                                onSubmit={async valores => {
-                                    await editar(valores)
-                                    console.log(valores)
-                                    navigate('/misProductos')
-                                }}
-                            />
-                        </div>
-                    </div> : <Cargando />}
+            <div className="container-fluid col-8 mt-5">
+                <h3>Editar producto</h3>
+                <div className="border border-secondary rounded-3 shadow mb-5 bg-body rounded">
+                    {producto ?
+                        <div>
+                            <div>
+                                <FormularioProductos
+                                    oferta={producto.oferta}
+                                    categoriasNoSeleccionadas={productoPutGet.categoriasNoSeleccionadas}
+                                    categoriasSeleccionadas={productoPutGet.categoriasSeleccionadas}
+                                    modelo={producto}
+                                    onSubmit={async valores => {
+                                        await editar(valores)
+                                        console.log(valores)
+                                        navigate('/misProductos')
+                                    }}
+                                />
+                            </div>
+                        </div> : <Cargando />}
+                </div>
 
             </div>
         </>

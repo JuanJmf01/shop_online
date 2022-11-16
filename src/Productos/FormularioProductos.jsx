@@ -82,6 +82,7 @@ export default function FormularioProductos(props) {
 
                         <br />
                         <FormGroupImagen campo='imagenProducto'
+                            tamaño="310px"
                             label={!oferta ? <>Imagen de producto</> : <>Imagen de oferta</>}
                             imagenURL={props.modelo.imagenProducto} />
                         <br />

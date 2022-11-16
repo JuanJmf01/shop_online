@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AutenticationContextt } from "../App";
@@ -15,30 +13,11 @@ export default function Menu() {
         return claims.filter(x => x.nombre === 'email')[0]?.valor
     }
 
-    // function obtenerVendedor(user) {
-    //     axios.get(`${urlUsuarios}/${user}`)
-    //         .then((respuesta) => {
-    //             setVendedor(respuesta.data.nombres)
-    //         })
-
-    //     if (!vendedor) {
-    //         axios.get(`${urlVendedores}/${user}`)
-    //             .then((respuesta) => {
-    //                 setVendedor(respuesta.data.nombres)
-    //             })
-    //     }
-    //     return vendedor
-    // }
-
     return (
         <>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
                     <Link className="navbar-brand" to="/productos">Marketplace</Link>
-                    {/* <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button> */}
                     <div className="collapse navbar-collapse" style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'smaller' }}>
                         <ul className="navbar-nav">
                             <li className="nav-item">
@@ -58,10 +37,10 @@ export default function Menu() {
                             <li class="nav-item">
                                 <Link className="nav-link" to="/misCompras">Mis compras</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/misVentas">Mis ventas</Link>
-                            </li>
                             <Autorizado role="vendedor" autorizado={<>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/misVentas">Mis ventas</Link>
+                                </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/misProductos">Mis productos</Link>
                                 </li>
@@ -82,7 +61,7 @@ export default function Menu() {
                                 </Link>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <Link className="dropdown-item" to="/personalInformacion">Informacion personal</Link>
-                                    <Link className="dropdown-item" to="/informacionNegocio">Informacion de negocio</Link>
+                                    <Autorizado role="vendedor" autorizado={<><Link className="dropdown-item" to="/informacionNegocio">Informacion de negocio</Link></>} />
                                 </div>
                             </li>
                         </ul>

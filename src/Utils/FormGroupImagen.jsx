@@ -4,7 +4,7 @@ import { useState } from "react"
 export default function FormGroupImagen(props) {
 
     const divStyle = { marginTop: '10px' }
-    const imgStyle = { width: '310px' }
+    const imgStyle = { width: props.tamaño }
 
     const [imagenBase64, setImagenBase64] = useState('');
     const [imagenURL, setImagenURL] = useState(props.imagenURL)

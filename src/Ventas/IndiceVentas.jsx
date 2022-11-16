@@ -2,12 +2,10 @@ import axios from "axios"
 import { Form, Formik } from "formik"
 import { useEffect, useState } from "react"
 import { useContext } from "react"
-import { Link } from "react-router-dom"
 import Swal from "sweetalert2"
 import { AutenticationContextt } from "../App"
 import Button from "../Utils/Button"
-import Cargando from "../Utils/Cargando"
-import { urlCompras, urlProductos, urlUsuarios, urlVendedores, urlVentas } from "../Utils/endpoinds"
+import { urlCompras, urlProductos, urlVendedores, urlVentas } from "../Utils/endpoinds"
 import { FormDataVentas } from "../Utils/FormDataVentas"
 import Input from "../Utils/Input"
 import Model from "../Utils/Models/Model"
@@ -31,7 +29,6 @@ export default function IndiceVentas() {
 
     var idPro = []
     var idProVentas = []
-    var longitud
 
     async function obtenerUsuario(email) {
         try {
@@ -58,7 +55,6 @@ export default function IndiceVentas() {
         await axios.get(`${urlVentas}/ventasTwo/${id}`)
             .then((respuesta) => {
                 returnProductoVenta(respuesta.data)
-                longitud = respuesta.data.length
             })
     }
 
@@ -82,7 +78,6 @@ export default function IndiceVentas() {
 
 
     async function productoEnproceso(valores) {
-        var newValores = valores.slice(0, 4)
         try {
             axios.post(`${urlCompras}/mostrarProductos`, JSON.stringify(valores),
                 {
@@ -224,7 +219,6 @@ export default function IndiceVentas() {
                     </div>
                 )
                 : <>No hay ventas para mostrar</>}
-
 
             {productoInd ?
                 <div>

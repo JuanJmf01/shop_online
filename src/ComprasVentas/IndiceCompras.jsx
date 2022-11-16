@@ -1,10 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useContext } from "react"
-import { Link } from "react-router-dom"
 import { AutenticationContextt } from "../App"
-import Button from "../Utils/Button"
-import Cargando from "../Utils/Cargando"
 import { urlCompras, urlProductos, urlUsuarios, urlVendedores, urlVentas } from "../Utils/endpoinds"
 
 export default function IndiceCompras() {
@@ -133,49 +130,66 @@ export default function IndiceCompras() {
             <h2>Mis Compras</h2>
             <br />
             {compras.length !== 0 ?
-                compras.map(producto => <>
+                compras.map(producto =>
                     <div className="card" style={{ top: "200", justifyContent: "flex-end", marginBottom: "30px" }}>
                         <div className="card-header" style={{ display: "flex" }}>
+                            <h4>Cliente:</h4>
                             <div style={{ marginLeft: "auto" }}>
 
                             </div>
 
                         </div>
                         <div className="card-body">
-                            <h5 className="card-title">Producto: {producto.nombre}</h5>
-                            <h6 className="card-title">Precio: {producto.precio}</h6>
                             <p className="card-text">{producto.descripcion}</p>
+                            <div style={{ display: "flex", marginTop: "-10px" }}>
+                                <h5 className="card-title">Producto:</h5>
+                                <p style={{ marginLeft: "15px" }}>{producto.nombre}</p>
+                            </div>
+                            <div style={{ display: "flex", marginTop: "-10px" }}>
+                                <h6 className="card-title">Precio individual: </h6>
+                                <p style={{ marginLeft: "15px" }}>{producto.precio}</p>
+                            </div>
+                            <div style={{ display: "flex", marginTop: "-10px" }}>
+                                <h6 className="card-title">Cantidad total comprada: </h6>
+                                <p style={{ marginLeft: "15px" }}>{producto.cantidad}</p>
+                            </div>
+                            <div style={{ display: "flex", marginTop: "-10px" }}>
+                                <h6 className="card-title">Total pagado: $</h6>
+                                <p style={{ marginLeft: "3px" }}>{producto.total}</p>
+                            </div>
+
                             <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
                                 src={producto.imagenProducto} alt="Producto" />
                         </div>
                     </div>
-                </>)
-                : <>No hay productos en "Proceso" para mostrar</>
-            }
+                )
+                : <>No hay ventas para mostrar</>}
 
 
             <br />
             <br />
             <h2>Mis pendientes</h2>
             <br />
-            {
-                enProceso.length !== 0 ?
-                    enProceso.map((producto) => <>
-                        <div className="card" style={{ top: "200", justifyContent: "flex-end", marginBottom: "30px" }}>
-                            <div className="card-header" style={{ display: "flex" }}>
-                                <h5>Producto: </h5>
+            {enProceso.length !== 0 ?
+                enProceso.map(producto =>
+                    <div className="card" style={{ top: "200", justifyContent: "flex-end", marginBottom: "30px" }}>
+                        <div className="card-header" style={{ display: "flex" }}>
+                            <h4>Cliente:</h4>
+                            <div style={{ marginLeft: "auto" }}>
+
                             </div>
-                            <div className="card-body">
-                                <h5 className="card-title">Producto:</h5>
-                                <h6 className="card-title">Precio: {producto.precio}</h6>
-                                <p className="card-text">{producto.descripcion}</p>
-                                <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
-                                    src={producto.imagenProducto} alt="Producto" />
-                            </div>
-                            <Button className="btn btn-danger">Ver</Button>
                         </div>
-                    </>) : <>No hay compras para mostrar</>
-            }
+                        <div className="card-body">
+                            <h5 className="card-title">Producto: {producto.nombre}</h5>
+                            <h6 className="card-title">Precio: {producto.precio}</h6>
+
+                            <p className="card-text">{producto.descripcion}</p>
+                            <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
+                                src={producto.imagenProducto} alt="Producto" />
+                        </div>
+                    </div>
+                )
+                : <>No tienes ventas en "Proceso" para mostrar</>}
 
             <br /><br />
 
