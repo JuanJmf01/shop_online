@@ -7,7 +7,7 @@ import AlertaContext from "../Utils/AlertaContext"
 import Button from "../Utils/Button"
 import Cargando from "../Utils/Cargando"
 import confirmar from "../Utils/ConfirmarAccion"
-import { urlMedioPago, urlUsuarios, urlVendedores } from "../Utils/endpoinds"
+import { urlMedioPago, urlProductos, urlUsuarios, urlVendedores } from "../Utils/endpoinds"
 import { FormDataMedioPago } from "../Utils/FormDataMedioPago"
 import FormGroupImagen from "../Utils/FormGroupImagen"
 import Input from "../Utils/Input"
@@ -76,7 +76,6 @@ export default function InformacionNegocio() {
     function borrarMedioPago(id) {
         axios.delete(`${urlMedioPago}/${id}`)
     }
-
 
     useEffect(() => {
         obtenerIdUsuario(nombreUsuario)
@@ -165,9 +164,7 @@ export default function InformacionNegocio() {
                                                             <Button className="btn btn-outline-danger btn-sm"
                                                                 onClick={() => confirmar(() => borrarMedioPago(medioPago.id))}
                                                             >Eliminar</Button>
-
                                                         </div>
-
                                                     </div>
                                                 </div>
 

@@ -1,16 +1,23 @@
 import axios from "axios"
+import { Form, Formik } from "formik"
 import { useEffect, useState } from "react"
 import { useContext } from "react"
+import Swal from "sweetalert2"
 import { AutenticationContextt } from "../App"
-import { urlCompras, urlProductos, urlUsuarios, urlVendedores, urlVentas } from "../Utils/endpoinds"
+import Button from "../Utils/Button"
+import { urlCompras, urlComprobantePago, urlProductos, urlUsuarios, urlVendedores, urlVentas } from "../Utils/endpoinds"
+import { FormDataComprobantePago } from "../Utils/FormDataComprobantePago"
+import FormGroupImagen from "../Utils/FormGroupImagen"
+import Model from "../Utils/Models/Model"
 
 export default function IndiceCompras() {
 
     const [enProceso, setEnProceso] = useState([])
-
-
     const [compras, setCompras] = useState([])
     const [esCliente, setEsCliente] = useState(true)
+
+    const [comprobante, setComprovbante] = useState()
+    const [model, setModel] = useState(false)
 
     const { claims } = useContext(AutenticationContextt)
 
@@ -118,6 +125,27 @@ export default function IndiceCompras() {
 
 
 
+
+
+    async function crearComprobantePago(valor) {
+        try {
+            const formData = FormDataComprobantePago(valor)
+            await axios({
+                method: 'post',
+                url: urlComprobantePago,
+                data: formData,
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then((respuesta) => {
+                console.log(respuesta.data)
+            })
+            Swal.fire({ icon: 'success', title: 'Comprobante de pago agregado' })
+        }
+        catch (error) {
+            console.log(error.response.data)
+        }
+    }
+
+
     useEffect(() => {
         obtenerUsuario(nombreUsuario)
 
@@ -131,37 +159,40 @@ export default function IndiceCompras() {
             <br />
             {compras.length !== 0 ?
                 compras.map(producto =>
-                    <div className="card" style={{ top: "200", justifyContent: "flex-end", marginBottom: "30px" }}>
-                        <div className="card-header" style={{ display: "flex" }}>
-                            <h4>Cliente:</h4>
-                            <div style={{ marginLeft: "auto" }}>
+                    <div style={{ display: "flex" }}>
+                        <div className="card" style={{ top: "200", width: "700px", marginBottom: "30px" }}>
+                            <div className="card-header" style={{ display: "flex" }}>
+                                <h4>Cliente:</h4>
+                                <div style={{ marginLeft: "auto" }}>
+
+                                </div>
 
                             </div>
+                            <div className="card-body">
+                                <p className="card-text">{producto.descripcion}</p>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h5 className="card-title">Producto:</h5>
+                                    <p style={{ marginLeft: "15px" }}>{producto.nombre}</p>
+                                </div>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h6 className="card-title">Precio individual: </h6>
+                                    <p style={{ marginLeft: "15px" }}>{producto.precio}</p>
+                                </div>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h6 className="card-title">Cantidad total comprada: </h6>
+                                    <p style={{ marginLeft: "15px" }}>{producto.cantidad}</p>
+                                </div>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h6 className="card-title">Total pagado: $</h6>
+                                    <p style={{ marginLeft: "3px" }}>{producto.total}</p>
+                                </div>
 
-                        </div>
-                        <div className="card-body">
-                            <p className="card-text">{producto.descripcion}</p>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h5 className="card-title">Producto:</h5>
-                                <p style={{ marginLeft: "15px" }}>{producto.nombre}</p>
+                                <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
+                                    src={producto.imagenProducto} alt="Producto" />
                             </div>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h6 className="card-title">Precio individual: </h6>
-                                <p style={{ marginLeft: "15px" }}>{producto.precio}</p>
-                            </div>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h6 className="card-title">Cantidad total comprada: </h6>
-                                <p style={{ marginLeft: "15px" }}>{producto.cantidad}</p>
-                            </div>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h6 className="card-title">Total pagado: $</h6>
-                                <p style={{ marginLeft: "3px" }}>{producto.total}</p>
-                            </div>
-
-                            <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
-                                src={producto.imagenProducto} alt="Producto" />
                         </div>
                     </div>
+
                 )
                 : <>No hay ventas para mostrar</>}
 
@@ -172,24 +203,78 @@ export default function IndiceCompras() {
             <br />
             {enProceso.length !== 0 ?
                 enProceso.map(producto =>
-                    <div className="card" style={{ top: "200", justifyContent: "flex-end", marginBottom: "30px" }}>
-                        <div className="card-header" style={{ display: "flex" }}>
-                            <h4>Cliente:</h4>
-                            <div style={{ marginLeft: "auto" }}>
+                    <div style={{ display: "flex" }}>
+                        <div className="card" style={{ top: "200", width: "700px", marginBottom: "30px" }}>
+                            <div className="card-header" style={{ display: "flex" }}>
+                                <h4>Cliente:</h4>
+                                <div style={{ marginLeft: "auto" }}>
 
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                <h5 className="card-title">Producto: {producto.nombre}</h5>
+                                <h6 className="card-title">Precio: {producto.precio}</h6>
+
+                                <p className="card-text">{producto.descripcion}</p>
+                                <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
+                                    src={producto.imagenProducto} alt="Producto" />
                             </div>
                         </div>
-                        <div className="card-body">
-                            <h5 className="card-title">Producto: {producto.nombre}</h5>
-                            <h6 className="card-title">Precio: {producto.precio}</h6>
+                        <div>
+                            <h6>Comprobante de pago</h6>
+                            <Formik initialValues={{
+                                vendedorId: '',
+                                clienteId: '',
+                                productoId: '',
+                                imagenComprobante: ''
+                            }}
 
-                            <p className="card-text">{producto.descripcion}</p>
-                            <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
-                                src={producto.imagenProducto} alt="Producto" />
+                                onSubmit={async valores => {
+                                    console.log(valores)
+                                    valores.vendedorId = producto.vendedorId
+                                    valores.clienteId = producto.clienteId
+                                    valores.productoId = producto.productoId
+                                    crearComprobantePago(valores)
+                                }}
+
+                            >
+
+                                {(formikProps) => (
+                                    <Form>
+                                        <FormGroupImagen campo='imagenComprobante'
+                                            tamaño="240px"
+                                            label="Imagen Medio de pago"
+                                        />
+                                        <br />
+
+                                        <div className="buttons">
+                                            <Button disabled={formikProps.isSubmitting} type="submit"
+                                                className="btn btn-primary"
+                                            >Agregar</Button>
+
+                                        </div>
+                                    </Form>
+                                )}
+
+                            </Formik>
+
+                            <Button type="submit" onClick={() => setModel(true)}
+                                className="btn btn-success"
+                            >ver comprobante</Button>
+
                         </div>
+
                     </div>
                 )
                 : <>No tienes ventas en "Proceso" para mostrar</>}
+
+
+
+            <div>
+                {model ? <Model title="Comprobante de pago">
+
+                </Model> : null}
+            </div>
 
             <br /><br />
 

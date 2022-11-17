@@ -11,4 +11,5 @@ export const urlRatings = `${apiURL}/rating`
 export const urlCompras = `${apiURL}/misCompras`
 export const urlVentas = `${apiURL}/misVentas`
 export const urlMedioPago = `${apiURL}/mediosDePago`
+export const urlComprobantePago = `${apiURL}/comprobantePago`
 
