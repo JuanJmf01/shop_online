@@ -20,7 +20,7 @@ export default function MiProductoIndividual(props) {
 
     return (
         <>
-            <div className='component'>
+            <div id ="carProduct" className='card col-3 p-3 mb-5 rounded mx-1 component' >
                 <div className="subComponent">
                     <Link to={construirLink()}>
                         <img src={props.producto.imagenProducto} alt="Poster" />

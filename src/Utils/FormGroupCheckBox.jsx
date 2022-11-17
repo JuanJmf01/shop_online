@@ -8,7 +8,7 @@ export default function FormGroupCheckBox(props) {
                 onChange={props.onChange}
                 checked={props.checked} 
                 autocomplete="off"/>
-            <label class="btn btn-outline-secondary"  htmlFor={props.campo}>{props.label}</label>
+            <label class="btn btn-outline-success"  htmlFor={props.campo}>{props.label}</label>
         </div>
     )
 }

@@ -13,15 +13,59 @@ import Rating from "../Utils/Rating"
 import Swal from "sweetalert2"
 
 export default function DetalleProducto() {
+    /*const bd = [
+        {
+            id:1,
+            nombre:"choclitos",
+            precio:1200,
+            categorias:"mekato",
+            votoUsuario:5,
+            promedioVoto:4,
+            descripcion:"torta muy rica fsdkjfnjkdsnkdsncjkdsncjkdsnckdsncjkndscnkjsdn dckjdncds kdcksdcdksjn klmlmpklñ,-dsc ",
+            numeroCelular:"32254678",
+            imagenProducto:"lanzamiento.png"
 
+        },
+        {
+            id:2,
+            nombre:"torta la abuela",
+            precio:1200,
+            categorias:{
+                id:1,
+                nombre:"juguitos"
+            },
+            votoUsuario:5,
+            descripcion:"torta muy rica fsdkjfnjkdsnkdsncjkdsncjkdsnckdsncjkndscnkjsdn dckjdncds kdcksdcdksjn klmlmpklñ,-dsc ",
+            promedioVoto:4,
+            numeroCelular:"32254678",
+            imagenProducto:"lanzamiento.png"
+
+        },
+        
+    ]
+
+    const bd2 = [
+        {
+            id:1,
+            nombre:"julito",
+            numeroCelular:"32254678",
+
+        },
+        {
+            id:2,
+            nombre:"julito",
+            numeroCelular:"32254678",
+        },
+        
+    ]*/
     const [añadirVenta, setAñadirVenta] = useState(false)
     const [comprar, setComprar] = useState(false)
     const [cantidad, setCantidad] = useState(1)
-    const [producto, setProducto] = useState()
-    const [vendedor, setVendedor] = useState({})
-
+    const [producto , setProducto] = useState()
+    const [vendedor, setVendedor] = useState()
+    console.log('producto desde detalle21', producto.categorias)
     const alerta = useContext(AlertaContext)
-
+    
     const { id } = useParams()
     //const navigate = useNavigate()
 
@@ -60,24 +104,22 @@ export default function DetalleProducto() {
 
     return (
         <>
-            {producto ? <div>
+            { producto ? 
+            <div class="container">
 
-                {producto ? <div>
-                    <div>
-                        <h2>{producto.nombre}</h2>
-                        {producto.categorias?.map(categoria =>
-                            <Link key={categoria.id} style={{ marginRight: '5px' }}
+                {producto ? 
+                <div>
+                    <div class="card mt-3 col-10 ">
+                        <h2 class="card-header">{producto.nombre}</h2>
+                        {/*producto.categorias?.map(categoria =>*/
+                            <Link key="" style={{ marginRight: '5px' }}
                                 className="btn btn-primary btn-sm rounded-pill"
-                                to={`/productos/filtrar?generoId=${categoria.id}`}
-                            >{categoria.nombre}
-                            </Link>)
+                                to="{/*`/productos/filtrar?generoId=`*/}"
+                            >{/*categoria.nombre*/}
+                            </Link>/*)*/
                         }
-                        {console.log(producto.votoUsuario)}
-                        | Voto Promedio : {producto.promedioVoto}
-                        | Tu voto :  <Rating maximoValor={5}
-                            valorSeleccionado={producto.votoUsuario}
-                            onChange={onVote} />
-                        <div style={{ display: 'flex', marginTop: '1rem' }}>
+                       
+                        <div class="card-body p-2" style={{ display: 'flex', marginTop: '1rem' }}>
 
                             <span style={{ display: 'inline-block', marginRight: '1rem' }}>
                                 <img src={producto.imagenProducto}
@@ -85,25 +127,49 @@ export default function DetalleProducto() {
                                     alt="poster"
                                 />
                             </span>
-                            {producto.descripcion ? <div style={{ marginTop: '1rem' }}>
-                                <h3>Descripcion</h3>
-                                <div>
-                                    <p>{producto.descripcion}</p>
+                            <div class="col-6">
+                                {console.log(producto.votoUsuario)}
+                                | Voto Promedio : {producto.promedioVoto}
+                                | Tu voto :  <Rating maximoValor={5}
+                                    valorSeleccionado={producto.votoUsuario}
+                                    onChange={onVote} />
+                                {producto.descripcion ? <div style={{ marginTop: '1rem' }}>
+                                    <h3>Descripcion</h3>
                                     <div>
-
+                                        <p>{producto.descripcion}</p>
                                     </div>
-                                </div>
-                            </div> : null}
-
-
+                                </div> : null}
+                            </div>
+                            <div class="mx-2">
+                                <h4>Precio</h4>
+                                <div><h5>$ {producto.precio}</h5></div>
+                            </div>
+                            <div>
+                                <Button
+                                    type="submit"
+                                    className="btn btn-success"
+                                    onClick={() => setAñadirVenta(true)}
+                                >Añadir venta</Button>
+                            </div>
+                            <div>
+                                <Button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    onClick={() => setComprar(true)}
+                                >Comprar</Button>
+                            </div>
                         </div>
-
-                        <div>
-                            <h4>Precio</h4>
-                            <div><h5>$ {producto.precio}</h5></div>
+                        <div class="mx-3 mb-3">
+                           <Link
+                                onClick={() => confirmar(() => borrarProducto())}
+                                className="btn btn-danger btn-sm rounded-pill ">Borrar</Link>
+                            <Link
+                                className="btn btn-primary btn-sm rounded-pill"
+                                to={`/productos/editar/${id}`}>Modificar</Link>
                         </div>
                     </div>
                 </div> : <Cargando />}
+
                 {añadirVenta ? <Model title="Añadir venta">
                     <div className="model">
                         <div>
@@ -115,12 +181,10 @@ export default function DetalleProducto() {
                             <h5 >Precio unidad:</h5>
                             <label >{producto.precio}</label>
                         </div>
-
-                        <h5>Cantidad vendida</h5>
-                        <div>
-                            <input className="form-control" type="number" onKeyUp={(e) => setCantidad(e.currentTarget.value)} />
+                        <div class="form-row">
+                            <h5 class="col-md-6" >Cantidad vendida:</h5>
+                            <input className="form-control col-md-6" type="number" onKeyUp={(e) => setCantidad(e.currentTarget.value)} />
                         </div>
-                        <br />
                         <div>
                             <span>Fecha de venta</span>
                             <input className="form-control" type='date' campo='fechaVenta' />
@@ -150,9 +214,9 @@ export default function DetalleProducto() {
                             <label>{producto.precio}</label>
                         </div>
 
-                        <div>
-                            <h5>Cantidad a comprar: </h5>
-                            <input className="form-control" type="number" onKeyUp={(e) => setCantidad(e.currentTarget.value)} />
+                        <div class="row">
+                            <h5 class="col-7">Cantidad a comprar: </h5>
+                            <input className="form-control col-5" type="number" onKeyUp={(e) => setCantidad(e.currentTarget.value)} />
                         </div>
 
                         <hr />
@@ -186,6 +250,17 @@ export default function DetalleProducto() {
                             </a>
                             <hr />
                             <h4>Medios de pago</h4>
+                            <div class="d-flex flex-row">
+                                    <div class="ml-5 col-3">
+                                        <Button className='btn btn-primary px-4' onClick={console.log()}>Nequi</Button>
+                                    </div>
+                                    <div class="col-4">
+                                        <Button className='btn btn-warning px-4' onClick={console.log()}>Bancolombia</Button>
+                                    </div>
+                                    <div class="col-4">
+                                        <Button className='btn btn-danger px-4' onClick={console.log()}>Daviplata</Button>
+                                    </div>
+                            </div>
                         </div>
 
                         <div className="btns">
@@ -194,33 +269,6 @@ export default function DetalleProducto() {
                     </div>
                 </Model> : null
                 }
-
-                <div>
-                    <Button
-                        type="submit"
-                        className="btn btn-success"
-                        onClick={() => setAñadirVenta(true)}
-                    >Añadir venta</Button>
-                </div>
-                <br />
-                <div>
-                    <Button
-                        type="submit"
-                        className="btn btn-primary"
-                        onClick={() => setComprar(true)}
-                    >Comprar</Button>
-                </div>
-
-                <br />
-                <div>
-                    <Link
-                        onClick={() => confirmar(() => borrarProducto())}
-                        className="btn btn-danger btn-sm rounded-pill">Borrar</Link>
-                    <Link
-                        className="btn btn-primary btn-sm rounded-pill"
-                        to={`/productos/editar/${id}`}
-                    >Modificar</Link>
-                </div>
             </div> : <Cargando />}
         </>
     )

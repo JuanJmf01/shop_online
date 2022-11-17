@@ -77,24 +77,23 @@ export default function InformacionPersonal() {
                                         label='Numero de celular' />
                                 </div>
                                 <br />
-                                <div>
-                                    <FormGroupCheckBox label='domiciliario activo?'
-                                        onChange={((e) => setStateDomi(e.currentTarget.checked))}
-                                        checked={stateDomi}
-                                        campo='oferta' />
+                                <div class="d-flex flex-row w-100 ">
+                                    <div class="">
+                                        <FormGroupCheckBox label='domiciliario activo?'
+                                            onChange={((e) => setStateDomi(e.currentTarget.checked))}
+                                            checked={stateDomi}
+                                            campo='oferta' />
+                                    </div>
+                                    <div class="">
+                                        <FormGroupCheckBox label='¿Vendedor activo?'
+                                            onChange={(e) => setStateVendedor(e.currentTarget.checked)}
+                                            checked={stateVendedor}
+                                            campo='oferta' />
+                                    </div>
                                 </div>
-                                <div>
-                                    <FormGroupCheckBox label='¿Vendedor activo?'
-                                        onChange={(e) => setStateVendedor(e.currentTarget.checked)}
-                                        checked={stateVendedor}
-                                        campo='oferta' />
-                                </div>
-
-
-                                <Button className='btn btn-primary' type='submit'>
+                                <Button className='btn btn-outline-secondary mt-2' type='submit'>
                                     Guardar
                                 </Button>
-
 
                             </Form>
                     /*  )*/}

@@ -5,7 +5,7 @@ import { urlProductos } from "../../Utils/endpoinds"
 import ListadoDeMisProductos from "../Components/ListadoDeMisProductos"
 
 export default function MisProductos() {
-
+    
     const [misProductos, setMisProductos] = useState({})
 
     useEffect(() => {

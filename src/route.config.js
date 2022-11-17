@@ -36,7 +36,7 @@ export const rutas = [
     { path: '/filtro/domiciliarios', componente: FiltroDomiciliarios },
 
 
-    { path: '/misVentas', componente: IndiceVentas, esAdmin: true },
+    { path: '/misVentas', componente: IndiceVentas, esAdmin: false },
 
 
     { path: '/ofertas', componente: IndiceOfertas },

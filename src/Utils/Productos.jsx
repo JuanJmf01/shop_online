@@ -6,7 +6,43 @@ import { urlProductos } from "./endpoinds"
 
 export default function Productos() {
 
-    const [productos, setProductos] = useState({})
+    const bd = [
+        {
+            id:1,
+            nombre:"choclitos",
+            precio:1200,
+            categorias:"mekato",
+            votoUsuario:5,
+            promedioVoto:4,
+            numeroCelular:"32254678",
+            imagenProducto:""
+
+        },
+        {
+            id:2,
+            nombre:"torta la abuela",
+            precio:1200,
+            categorias:"mekato",
+            votoUsuario:5,
+            promedioVoto:4,
+            numeroCelular:"32254678",
+            imagenProducto:""
+
+        },
+        {
+            id:3,
+            nombre:"torta la abuela",
+            precio:1200,
+            categorias:"mekato",
+            votoUsuario:5,
+            promedioVoto:4,
+            numeroCelular:"32254678",
+            imagenProducto:""
+
+        },
+        
+    ]
+    const [productos, setProductos] = useState(bd)
 
     useEffect(() => {
         axios.get(urlProductos)
@@ -15,13 +51,13 @@ export default function Productos() {
                 console.log(respuesta.data)
             })
     }, [])
-
+    console.log(productos)
     return (
         <>
             <br />
             <h3>Productos</h3>
             <br />
-            <ListadoDeProductos productos={productos.productos} />
+            <ListadoDeProductos productos={productos} />
             <br />
             <h3>Oferta</h3>
             <ListadoDeProductos productos={productos.ofertas} />
