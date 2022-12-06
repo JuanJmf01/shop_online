@@ -16,6 +16,7 @@ export default function IndiceVentas() {
 
     const [stateModel, setStateModel] = useState(false)
     const [productoInd, setProductoInd] = useState()
+    const [imagenComprobante, setImagenComprobante] = useState()
     const [esCliente, setEsCliente] = useState()
     const [vendedorId, setVendedorId] = useState()
     const [clienteId, setClienteId] = useState()
@@ -83,7 +84,7 @@ export default function IndiceVentas() {
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }).then((respuesta) => {
-                    console.log("ULTIMA ", respuesta.data)
+                    console.log("EN PROCESOOOO ", respuesta.data)
                     setEnProceso(respuesta.data)
                 })
         } catch (error) {
@@ -92,12 +93,12 @@ export default function IndiceVentas() {
     }
 
     async function productoVentas(valores) {
-            try {
+        try {
             axios.post(`${urlVentas}/mostrarVentas`, JSON.stringify(valores),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }).then((respuesta) => {
-                    console.log("ULTIMA DESPUES ", respuesta.data)
+                    console.log("VENTASSSS ", respuesta.data)
                     setVentas(respuesta.data)
                 })
         } catch (error) {
@@ -127,7 +128,28 @@ export default function IndiceVentas() {
             })
             Swal.fire({ icon: 'success', title: 'Venta agregada' })
             borrarCompraEnProceso(idCompra)
+            const valoresComprobante = {
+                id: valores.id,
+                imagenComprobante: valores.imagenComprobante
+            }
+            guardarComprobante(valoresComprobante)
             setStateModel(false)
+        }
+        catch (error) {
+            console.log(error.response.data)
+        }
+    }
+
+
+    async function guardarComprobante(valores) {
+        try {
+            const formData = FormDataVentas(valores)
+            await axios({
+                method: 'post',
+                url: `${urlVentas}/aggComprobanteVendedor`,
+                data: formData,
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
         }
         catch (error) {
             console.log(error.response.data)
@@ -150,33 +172,43 @@ export default function IndiceVentas() {
             <br />
             {enProceso.length !== 0 ?
                 enProceso.map(producto =>
-                    <div className="card" style={{ top: "200", justifyContent: "flex-end", marginBottom: "30px" }}>
-                        <div className="card-header" style={{ display: "flex" }}>
-                            <h4>Cliente:</h4>
-                            <div style={{ marginLeft: "auto" }}>
+                    <div style={{ display: "flex" }}>
+                        <div className="card" style={{ width: "700px", marginBottom: "30px" }}>
+                            <div className="card-header" style={{ display: "flex" }}>
+                                <h4>Cliente: {producto.usuario.nombres} {producto.usuario.apellidos}</h4>
+                                <div style={{ marginLeft: "auto" }}>
 
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                <h5 className="card-title">Producto: {producto.nombre}</h5>
+                                <h6 className="card-title">Precio: {producto.precio}</h6>
+
+                                <p className="card-text">{producto.descripcion}</p>
+                                <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
+                                    src={producto.imagenProducto} alt="Producto" />
+                                <div style={{ paddingTop: "40px", paddingLeft: "30px" }}>
+                                    <Button
+                                        type="submit"
+                                        className="btn btn-success"
+                                        onClick={() => {
+                                            productoIndividual(producto.productoId)
+                                            setStateModel(true)
+                                            setClienteId(producto.clienteId)
+                                            setEsCliente(producto.esCliente)
+                                            setIdCompra(producto.id)
+                                            setImagenComprobante(producto.imagenComprobante)
+                                        }}
+                                    >Añadir venta</Button>
+                                </div>
                             </div>
                         </div>
-                        <div className="card-body">
-                            <h5 className="card-title">Producto: {producto.nombre}</h5>
-                            <h6 className="card-title">Precio: {producto.precio}</h6>
-
-                            <p className="card-text">{producto.descripcion}</p>
-                            <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
-                                src={producto.imagenProducto} alt="Producto" />
-                            <div style={{ paddingTop: "40px", paddingLeft: "30px" }}>
-                                <Button
-                                    type="submit"
-                                    className="btn btn-success"
-                                    onClick={() => {
-                                        productoIndividual(producto.productoId)
-                                        setStateModel(true)
-                                        setClienteId(producto.clienteId)
-                                        setEsCliente(producto.esCliente)
-                                        setIdCompra(producto.id)
-                                    }}
-                                >Añadir venta</Button>
-                            </div>
+                        <div style={{ marginLeft: "30px" }}>
+                            <h6>Comprobante de pago</h6>
+                            {producto.imagenComprobante ?
+                                <div style={{ marginLeft: "30px" }}>
+                                    <img style={{ height: "290px", width: "250px" }} src={producto.imagenComprobante} alt="" />
+                                </div> : <>No hay comprobantes que mostrar</>}
                         </div>
                     </div>
                 )
@@ -186,35 +218,43 @@ export default function IndiceVentas() {
             <br />
             {ventas.length !== 0 ?
                 ventas.map(producto =>
-                    <div className="card" style={{ top: "200", justifyContent: "flex-end", marginBottom: "30px" }}>
-                        <div className="card-header" style={{ display: "flex" }}>
-                            <h4>Cliente:</h4>
-                            <div style={{ marginLeft: "auto" }}>
+                    <div style={{ display: "flex" }}>
+                        <div className="card" style={{ width: "700px", marginBottom: "30px" }}>
+                            <div className="card-header" >
+                                <h4>Cliente: {producto.usuario.nombres} {producto.usuario.apellidos}</h4>
+                                <div style={{ marginLeft: "auto" }}>
 
+                                </div>
                             </div>
+                            <div className="card-body">
+                                <p className="card-text">{producto.descripcion}</p>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h5 className="card-title">Producto:</h5>
+                                    <p style={{ marginLeft: "15px" }}>{producto.nombre}</p>
+                                </div>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h6 className="card-title">Precio individual: </h6>
+                                    <p style={{ marginLeft: "15px" }}>{producto.precio}</p>
+                                </div>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h6 className="card-title">Cantidad total vendida: </h6>
+                                    <p style={{ marginLeft: "15px" }}>{producto.cantidad}</p>
+                                </div>
+                                <div style={{ display: "flex", marginTop: "-10px" }}>
+                                    <h6 className="card-title">Total $: </h6>
+                                    <p style={{ marginLeft: "15px" }}>{producto.total}</p>
+                                </div>
 
+                                <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
+                                    src={producto.imagenProducto} alt="Producto" />
+                            </div>
                         </div>
-                        <div className="card-body">
-                            <p className="card-text">{producto.descripcion}</p>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h5 className="card-title">Producto:</h5>
-                                <p style={{ marginLeft: "15px" }}>{producto.nombre}</p>
-                            </div>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h6 className="card-title">Precio individual: </h6>
-                                <p style={{ marginLeft: "15px" }}>{producto.precio}</p>
-                            </div>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h6 className="card-title">Cantidad total vendida: </h6>
-                                <p style={{ marginLeft: "15px" }}>{producto.cantidad}</p>
-                            </div>
-                            <div style={{ display: "flex", marginTop: "-10px" }}>
-                                <h6 className="card-title">Total $: </h6>
-                                <p style={{ marginLeft: "15px" }}>{producto.total}</p>
-                            </div>
-
-                            <img style={{ with: "200px", height: "200px", float: "right", marginTop: "-110px" }}
-                                src={producto.imagenProducto} alt="Producto" />
+                        <div style={{ marginLeft: "30px" }}>
+                            <h6>Comprobante de pago</h6>
+                            {producto.imagenComprobante ?
+                                <div style={{ marginLeft: "30px" }}>
+                                    <img style={{ height: "290px", width: "250px" }} src={producto.imagenComprobante} alt="" />
+                                </div> : <>No hay comprobantes que mostrar</>}
                         </div>
                     </div>
                 )
@@ -223,55 +263,59 @@ export default function IndiceVentas() {
             {productoInd ?
                 <div>
                     {stateModel ? <Model title="Añadir una venta">
-                        <div style={{ display: "flex" }}>
-                            <h5 >Producto:</h5>
-                            <label style={{ marginLeft: "auto" }} >{productoInd.nombre}</label>
-                        </div>
+                        <div>
+                            <div style={{ display: "flex" }}>
+                                <h5 >Producto:</h5>
+                                <label style={{ marginLeft: "auto" }} >{productoInd.nombre}</label>
+                            </div>
 
-                        <div style={{ display: "flex" }}>
-                            <h5>Precio unidad:</h5>
-                            <label style={{ marginLeft: "auto" }} >{productoInd.precio}</label>
-                        </div>
-                        <br />
-                        <Formik initialValues={{
-                            total: '',
-                            cantidad: '',
-                            fecha: '',
-                            esCliente: '',
-                            clienteId: '',
-                            vendedorId: '',
-                            productoId: ''
-                        }}
-                            onSubmit={async valores => {
-                                valores.total = productoInd.precio * valores.cantidad
-                                valores.productoId = productoInd.id
-                                valores.vendedorId = vendedorId
-                                valores.esCliente = esCliente
-                                valores.clienteId = clienteId
-                                console.log(valores)
-                                añadirVenta2(valores)
+                            <div style={{ display: "flex" }}>
+                                <h5>Precio unidad:</h5>
+                                <label style={{ marginLeft: "auto" }} >{productoInd.precio}</label>
+                            </div>
+                            <br />
+                            <Formik initialValues={{
+                                total: '',
+                                cantidad: '',
+                                fecha: '',
+                                imagenComprobante: '',
+                                esCliente: '',
+                                clienteId: '',
+                                vendedorId: '',
+                                productoId: ''
                             }}
-                        >
-                            {(formikProps) => (
-                                <Form>
-                                    <h5>Cantidad a vender</h5>
-                                    <div>
-                                        <Input type="number" campo="cantidad" />
-                                    </div>
-                                    <br />
-                                    <div>
-                                        <span>Fecha de venta</span>
-                                        <Input type='date' campo='fecha' />
-                                    </div>
-                                    <br />
+                                onSubmit={async valores => {
+                                    valores.total = productoInd.precio * valores.cantidad
+                                    valores.productoId = productoInd.id
+                                    valores.vendedorId = vendedorId
+                                    valores.esCliente = esCliente
+                                    valores.clienteId = clienteId
+                                    valores.imagenComprobante = imagenComprobante
+                                    console.log(valores)
+                                    añadirVenta2(valores)
+                                }}
+                            >
+                                {(formikProps) => (
+                                    <Form>
+                                        <h5>Cantidad a vender</h5>
+                                        <div>
+                                            <Input type="number" campo="cantidad" />
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <span>Fecha de venta</span>
+                                            <Input type='date' campo='fecha' />
+                                        </div>
+                                        <br />
 
-                                    <div className="btns">
-                                        <Button disabled={formikProps.isSubmitting} type="submit" className='btn btn btn-success'>Confirmar</Button>
-                                        <Button className='btn btn-danger' onClick={() => !setStateModel()}>Cancelar</Button>
-                                    </div>
-                                </Form>
-                            )}
-                        </Formik>
+                                        <div className="btns">
+                                            <Button disabled={formikProps.isSubmitting} type="submit" className='btn btn btn-success'>Confirmar</Button>
+                                            <Button className='btn btn-danger' onClick={() => !setStateModel()}>Cancelar</Button>
+                                        </div>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </div>
 
                     </Model> : null}
                 </div> : null

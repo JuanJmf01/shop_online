@@ -6,19 +6,13 @@
 export function FormDataComprobantePago(producto) {
     const formData = new FormData() 
 
+    if (producto.id) {
+        formData.append("id", producto.id)
+    }
+
     if (producto.imagenComprobante) {
         formData.append("imagenComprobante", producto.imagenComprobante)
     }
-    if (producto.clienteId) {
-        formData.append("clienteId", producto.clienteId)
-    }
-    if (producto.vendedorId) {
-        formData.append("vendedorId", producto.vendedorId)
-    }
-    if (producto.productoId) {
-        formData.append("productoId", producto.productoId)
-    }
-
 
 
     return formData

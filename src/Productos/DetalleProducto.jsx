@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import Button from "../Utils/Button"
 import Cargando from "../Utils/Cargando"
-import { urlCompras, urlProductos, urlRatings, urlUsuarios, urlVendedores } from "../Utils/endpoinds"
+import { urlCompras, urlMedioPago, urlProductos, urlRatings, urlUsuarios, urlVendedores } from "../Utils/endpoinds"
 import Model from "../Utils/Models/Model"
 import './css/detalleProducto.css'
 import Rating from "../Utils/Rating"
@@ -15,7 +15,7 @@ import { AutenticationContextt } from "../App"
 
 export default function DetalleProducto() {
 
-    const [añadirVenta, setAñadirVenta] = useState(false)
+    const [mediosDePago, setMediosDePago] = useState(false)
     const [comprar, setComprar] = useState(false)
     const [cantidad, setCantidad] = useState(1)
     const [producto, setProducto] = useState()
@@ -53,6 +53,7 @@ export default function DetalleProducto() {
             axios.get(`${urlVendedores}/${obtenerNombreUsuario()}`)
                 .then((respuesta) => {
                     setCliente(respuesta.data.id)
+
                 })
             setEsCliente(false)
         }
@@ -61,8 +62,16 @@ export default function DetalleProducto() {
     async function postCompra() {
         await axios.post(urlCompras, compra)
         Swal.fire({ icon: 'success', title: 'Venta en espera' });
+        setComprar(false)
     }
 
+    function obtenerMediosDePago(id) {
+        axios.get(`${urlMedioPago}/${id}`)
+            .then((respuesta) => {
+                setMediosDePago(respuesta.data)
+                console.log(respuesta.data)
+            })
+    }
 
     //Podemos traer por 'producto' por 'vendedores' y 'categorias'
     useEffect(() => {
@@ -70,6 +79,7 @@ export default function DetalleProducto() {
             .then((respuesta) => {
                 setProducto(respuesta.data)
                 setVendedor(respuesta.data.vendedores[0])
+                obtenerMediosDePago(respuesta.data.vendedores[0].id)
                 console.log(respuesta.data)
             })
         obtenerUsuario()
@@ -89,7 +99,6 @@ export default function DetalleProducto() {
 
     return (
         <>
-            {console.log("ES ESTA", compra)}
             {producto ? <div>
 
                 {producto ? <div>
@@ -114,21 +123,21 @@ export default function DetalleProducto() {
                                     alt="poster"
                                 />
                             </span>
-                            {producto.descripcion ? <div style={{ marginTop: '1rem' }}>
-                                <h3>Descripcion</h3>
-                                <div>
-                                    <p>{producto.descripcion}</p>
+                            {producto.descripcion ?
+                                <div style={{ marginTop: '1rem' }}>
+                                    <h3>Descripcion</h3>
                                     <div>
-
+                                        <p>{producto.descripcion}</p>
                                     </div>
-                                </div>
-                            </div> : null}
+                                </div> : null}
                         </div>
-
                         <div>
                             <h4>Precio</h4>
                             <div><h5>$ {producto.precio}</h5></div>
                         </div>
+
+
+
                     </div>
                 </div> : <Cargando />}
 
@@ -142,8 +151,8 @@ export default function DetalleProducto() {
                             <h5>Precio Unidad:</h5>
                             <label>{producto.precio}</label>
                         </div>
-
-                        <div>
+                        <hr />
+                        {/* <div>
                             <h5>Cantidad a comprar: </h5>
                             <input className="form-control" type="number" onKeyUp={(e) => setCantidad(e.currentTarget.value)} />
                         </div>
@@ -153,7 +162,7 @@ export default function DetalleProducto() {
                             <h5>Total a pagar</h5>
                             <input className="form-control" type="number" value={calcularTotal(cantidad, producto.precio)} disabled='disabled' />
                         </div>
-                        <hr />
+                        <hr /> */}
                         <h4>Contacto de vendedor</h4>
                         <div>
                             <h5>Nombre</h5>
@@ -179,6 +188,24 @@ export default function DetalleProducto() {
                             </a>
                             <hr />
                             <h4>Medios de pago</h4>
+                            <div className="card-group">
+                                {mediosDePago ?
+                                    mediosDePago?.map(medioPago =>
+                                        <div style={{ marginRight: "13px" }}>
+                                            <div class="card" style={{ width: "6rem", height: "7rem", display: "flex" }}>
+                                                <img style={{ width: "48px", height: "48px", marginLeft: "24px", marginTop: "13px" }}
+                                                    class="card-img-top" src={medioPago.imagenMedioPago}
+                                                    alt="Card image cap"
+                                                />
+                                                <div className="card-body">
+                                                    <h6 style={{ marginLeft: "9px", marginTop: "-6px" }} class="card-title">{medioPago.nombre}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    ) : <Cargando />
+                                }
+                            </div>
                         </div>
 
                         <div className="btns">

@@ -6,6 +6,9 @@
 export function FormDataVentas(producto) {
     const formData = new FormData() 
 
+    if (producto.id) {
+        formData.append("id", producto.id)
+    }
     if (producto.total) {
         formData.append("total", producto.total)
     }
@@ -23,6 +26,9 @@ export function FormDataVentas(producto) {
     }
     if (producto.productoId) {
         formData.append("productoId", producto.productoId)
+    }
+    if (producto.imagenComprobante) {
+        formData.append("imagenComprobante", producto.imagenComprobante)
     }
     if (producto.fecha) {
         formData.append("fecha", formatearFecha(producto.fecha));

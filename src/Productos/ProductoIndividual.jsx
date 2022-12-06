@@ -1,26 +1,29 @@
 import axios from "axios";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AutenticationContextt } from "../App";
 import Button from "../Utils/Button";
 import { urlVentas } from "../Utils/endpoinds";
 import './css/productoIndividual.css'
 export default function ProductoIndividual(props) {
 
     const construirLink = () => `/productos/${props.producto.id}`
-    const { producto } = props
 
-    function productoIndividual(id) {
-        axios.get(`${urlVentas}/productoIndividual/${id}`)
-            .then((respuesta) => {
-                //setProducto(respuesta.data)
-                //setVendedor(respuesta.data.vendedores[0])
-                console.log("RESPUESTA", respuesta.data)
-            })
+    const { claims } = useContext(AutenticationContextt);
+
+
+    function manejarClick() {
+        if (claims.length === 0) {
+            Swal.fire({ title: "Error", text: 'Debes loguearte para votar', icon: 'error' });
+            return;
+        }
     }
+
 
     return (
         <>
             <div className='card col-3 shadow p-4 mb-52 bg-body rounded component'>
-
                 <div>
                     <Link to={construirLink()}>
                         <img src={props.producto.imagenProducto} alt="Poster" />
@@ -35,9 +38,6 @@ export default function ProductoIndividual(props) {
                         to={construirLink()}>
                         Vista Previa
                     </Link>
-                    <Button className="btn btn-danger" onClick={() => { productoIndividual(props.producto.id) }}>
-                        Prueba
-                    </Button>
                 </div>
             </div>
         </>

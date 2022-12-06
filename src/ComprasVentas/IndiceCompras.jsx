@@ -16,6 +16,9 @@ export default function IndiceCompras() {
     const [compras, setCompras] = useState([])
     const [esCliente, setEsCliente] = useState(true)
 
+    const [vendedor, setVendedor] = useState({})
+
+
     const [comprobante, setComprovbante] = useState()
     const [model, setModel] = useState(false)
 
@@ -38,6 +41,8 @@ export default function IndiceCompras() {
             await axios.get(`${urlVendedores}/${email}`)
                 .then((respuesta) => {
                     setEsCliente(false)
+                    setVendedor(respuesta.data)
+                    console.log("VENDEDORESSS", respuesta.data)
                     allVendedoresComprasEnProceso(respuesta.data.id)
                     allVendedoresCompras(respuesta.data.id)
                 })
@@ -100,7 +105,7 @@ export default function IndiceCompras() {
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }).then((respuesta) => {
-                    console.log("PRINCIPAL", respuesta.data)
+                    console.log("EN PROCESOOOO", respuesta.data)
                     setEnProceso(respuesta.data)
                 })
 
@@ -115,7 +120,7 @@ export default function IndiceCompras() {
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }).then((respuesta) => {
-                    console.log("ULTIMA DESPUES ", respuesta.data)
+                    console.log("COMPRASSSS ", respuesta.data)
                     setCompras(respuesta.data)
                 })
         } catch (error) {
@@ -126,19 +131,19 @@ export default function IndiceCompras() {
 
 
 
-
     async function crearComprobantePago(valor) {
         try {
             const formData = FormDataComprobantePago(valor)
             await axios({
                 method: 'post',
-                url: urlComprobantePago,
+                url: `${urlCompras}/aggComprobante`,
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' }
             }).then((respuesta) => {
                 console.log(respuesta.data)
             })
             Swal.fire({ icon: 'success', title: 'Comprobante de pago agregado' })
+            setModel(false)
         }
         catch (error) {
             console.log(error.response.data)
@@ -162,9 +167,16 @@ export default function IndiceCompras() {
                     <div style={{ display: "flex" }}>
                         <div className="card" style={{ top: "200", width: "700px", marginBottom: "30px" }}>
                             <div className="card-header" style={{ display: "flex" }}>
-                                <h4>Cliente:</h4>
-                                <div style={{ marginLeft: "auto" }}>
-
+                                <div>
+                                    <div>
+                                        <h4>Vendedor: {producto.vendedor.nombres} {producto.vendedor.apellidos}</h4>
+                                    </div>
+                                    <div style={{ marginTop: "-30px", float: "right" }}>
+                                        <a href={`https://wa.me/${producto.vendedor.numeroCelular}`} target="_blank" rel="noreferrer">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2504/2504957.png" alt="WhatsApp"
+                                                className="logo" />
+                                        </a>
+                                    </div>
                                 </div>
 
                             </div>
@@ -191,6 +203,11 @@ export default function IndiceCompras() {
                                     src={producto.imagenProducto} alt="Producto" />
                             </div>
                         </div>
+                        {producto.imagenComprobante ?
+                            <div style={{ marginLeft: "30px" }}>
+                                <h5>Comprobante</h5>
+                                <img style={{ height: "290px", width: "250px" }} src={producto.imagenComprobante} alt="" />
+                            </div> : <>No hay comprobantes que mostrar</>}
                     </div>
 
                 )
@@ -205,11 +222,19 @@ export default function IndiceCompras() {
                 enProceso.map(producto =>
                     <div style={{ display: "flex" }}>
                         <div className="card" style={{ top: "200", width: "700px", marginBottom: "30px" }}>
-                            <div className="card-header" style={{ display: "flex" }}>
-                                <h4>Cliente:</h4>
-                                <div style={{ marginLeft: "auto" }}>
-
+                            <div className="card-header">
+                                <div>
+                                    <div>
+                                        <h4>Vendedor: {producto.vendedor.nombres} {producto.vendedor.apellidos}</h4>
+                                    </div>
+                                    <div style={{ marginTop: "-30px", float: "right" }}>
+                                        <a href={`https://wa.me/${producto.vendedor.numeroCelular}`} target="_blank" rel="noreferrer">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2504/2504957.png" alt="WhatsApp"
+                                                className="logo" />
+                                        </a>
+                                    </div>
                                 </div>
+
                             </div>
                             <div className="card-body">
                                 <h5 className="card-title">Producto: {producto.nombre}</h5>
@@ -221,59 +246,62 @@ export default function IndiceCompras() {
                             </div>
                         </div>
                         <div>
-                            <h6>Comprobante de pago</h6>
-                            <Formik initialValues={{
-                                vendedorId: '',
-                                clienteId: '',
-                                productoId: '',
-                                imagenComprobante: ''
-                            }}
-
-                                onSubmit={async valores => {
-                                    console.log(valores)
-                                    valores.vendedorId = producto.vendedorId
-                                    valores.clienteId = producto.clienteId
-                                    valores.productoId = producto.productoId
-                                    crearComprobantePago(valores)
-                                }}
-
-                            >
-
-                                {(formikProps) => (
-                                    <Form>
-                                        <FormGroupImagen campo='imagenComprobante'
-                                            tamaño="240px"
-                                            label="Imagen Medio de pago"
-                                        />
-                                        <br />
-
-                                        <div className="buttons">
-                                            <Button disabled={formikProps.isSubmitting} type="submit"
-                                                className="btn btn-primary"
-                                            >Agregar</Button>
-
-                                        </div>
-                                    </Form>
-                                )}
-
-                            </Formik>
-
-                            <Button type="submit" onClick={() => setModel(true)}
-                                className="btn btn-success"
-                            >ver comprobante</Button>
+                            {producto.imagenComprobante ?
+                                <div style={{ marginLeft: "30px" }}>
+                                    <h6>Comprobante de pago</h6>
+                                    <img style={{ height: "290px", width: "250px" }} src={producto.imagenComprobante} alt="" />
+                                </div> : <>No tienes comprobante de pago</>}
+                            <Button className="btn btn-outline-success" onClick={() => setModel(true)} >Agregar comprobante</Button>
 
                         </div>
+                        <div>
+                            {model ? <Model title="Comprobante de pago">
+                                <Formik initialValues={{
+                                    id: '',
+                                    imagenComprobante: ''
+                                }}
 
+                                    onSubmit={async valores => {
+                                        console.log(valores)
+                                        valores.id = producto.id
+                                        crearComprobantePago(valores)
+                                    }}
+
+                                >
+
+                                    {(formikProps) => (
+                                        <Form>
+                                            <FormGroupImagen campo='imagenComprobante'
+                                                tamaño="240px"
+                                                label="Imagen Medio de pago"
+                                                imagenURL={producto.imagenComprobante}
+                                            />
+                                            <br />
+
+                                            <div style={{ paddingLeft: "130px" }}>
+                                                <Button disabled={formikProps.isSubmitting} type="submit"
+                                                    className="btn btn-primary"
+                                                >Agregar</Button>
+                                            </div>
+                                        </Form>
+                                    )}
+
+                                </Formik>
+
+                                <div style={{ marginTop: "-38px", marginLeft: "240px" }}>
+                                    <Button type="submit"
+                                        className="btn btn-danger"
+                                        onClick={() => setModel(false)}
+                                    >Cancelar</Button>
+                                </div>
+                            </Model> : null}
+                        </div>
                     </div>
                 )
                 : <>No tienes ventas en "Proceso" para mostrar</>}
 
-
-
             <div>
-                {model ? <Model title="Comprobante de pago">
 
-                </Model> : null}
             </div>
 
             <br /><br />
