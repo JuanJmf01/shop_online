@@ -1,0 +1,28 @@
+.model h4{
+    text-align: center;
+}
+
+.model h5 {
+    display: inline-block;
+}
+
+.model label {
+    float: right;
+}
+
+
+.btns{
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+}
+
+.btn{
+    margin-right: 10px;
+}
+
+.logo{
+    width: 25px;
+    float: right;
+    margin-left: 10px;
+}

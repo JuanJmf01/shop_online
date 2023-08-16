@@ -1,0 +1,34 @@
+.component {
+    margin-right: 1%;
+    text-align: center;
+    margin-right: 50px;
+    margin-top: 10px;
+
+}
+
+
+.component p {
+    height: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+
+.component img {
+    width: 160px;
+    height: 150px;
+}
+
+.component a {
+    text-decoration: none;
+}
+
+
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 10px;
+}
